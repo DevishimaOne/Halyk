@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Halyk Life Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════ -->
+<div id="screen-login" class="screen active">
+  <div class="login-bg">
+    <div class="login-brand">
+      <div class="brand-mark">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <div class="brand-name">Halyk Life Education</div>
+          <div class="brand-sub">ПЛАТФОРМА ДИСТАНЦИОННОГО ОБУЧЕНИЯ</div>
+        </div>
+      </div>
+    </div>
+    <div class="login-card">
+      <h1 class="login-title">Добро пожаловать</h1>
+      <p class="login-desc">Войдите для доступа к учебным материалам</p>
+      <div id="login-err" class="login-err" style="display:none">Неверный логин или пароль</div>
+      <div class="field"><label>Логин</label><input id="l-login" type="text" placeholder="Введите логин" autocomplete="username"/></div>
+      <div class="field"><label>Пароль</label>
+        <div class="pw-wrap"><input id="l-pass" type="password" placeholder="Введите пароль" autocomplete="current-password"/>
+        <button class="pw-eye" onclick="togglePw()">👁</button></div>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="doLogin()">Войти</button>
+      <div class="login-hint">Демо: <b>admin/admin123</b> · <b>user/user123</b> · <b>konsult/pass123</b></div>
+    </div>
+    <div class="login-footer">© 2026 АО «Халық-Life». Все права защищены.</div>
+  </div>
+</div>
+
+<!-- ══ USER APP ════════════════════════════════ -->
+<div id="screen-user" class="screen">
+  <header class="topbar">
+    <div class="tb-l">
+      <button class="hamburger" onclick="toggleSide('user-side')"><span></span><span></span><span></span></button>
+      <div class="topbar-brand">
+        <div class="tb-icon">🎓</div>
+        <div><div class="tb-name">Halyk Life Education</div></div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="xp-pill">⭐ <span id="u-xp">0</span> XP</div>
+      <div class="streak-pill">🔥 <span id="u-streak">0</span></div>
+      <div class="user-chip" onclick="toggleDrop('u-drop')">
+        <div class="avatar" id="u-avatar">К</div>
+        <span id="u-name">—</span>
+        <div class="dropdown" id="u-drop">
+          <div class="dd-item" onclick="uPage('progress')">📊 Прогресс</div>
+          <div class="dd-item" onclick="uPage('certs')">🎓 Сертификаты</div>
+          <div class="dd-sep"></div>
+          <div class="dd-item red" onclick="doLogout()">Выйти</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="user-side">
+      <nav class="side-nav">
+        <button class="sn-item" data-p="home" onclick="uPage('home')"><span>🏠</span>Главная</button>
+        <button class="sn-item" data-p="my-courses" onclick="uPage('my-courses')"><span>📖</span>Мои курсы</button>
+        <button class="sn-item" data-p="progress" onclick="uPage('progress')"><span>📊</span>Прогресс</button>
+        <button class="sn-item" data-p="certs" onclick="uPage('certs')"><span>🏅</span>Сертификаты</button>
+        <button class="sn-item" data-p="leaderboard" onclick="uPage('leaderboard')"><span>🏆</span>Рейтинг</button>
+        <div class="sn-divider"></div>
+        <div class="sn-label">Накопительное НСЖ</div>
+        <div id="side-nsj"></div>
+        <div class="sn-divider"></div>
+        <div class="sn-label">Ненакопительное <span style="font-size:.65rem;color:var(--amber);background:#FEF3C7;padding:1px 5px;border-radius:6px">Скоро</span></div>
+        <div id="side-nonsj"></div>
+      </nav>
+      <div class="side-footer">
+        <div class="sf-user">
+          <div class="avatar sm" id="side-av">К</div>
+          <div><div id="side-uname" class="sf-name">—</div><div class="sf-role">Консультант</div></div>
+        </div>
+      </div>
+    </aside>
+    <main class="main" id="user-main">
+      <div class="page" id="upage-home"></div>
+      <div class="page" id="upage-my-courses"></div>
+      <div class="page" id="upage-progress"></div>
+      <div class="page" id="upage-certs"></div>
+      <div class="page" id="upage-leaderboard"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ LESSON SHELL ════════════════════════════ -->
+<div id="lesson-shell" style="display:none;position:fixed;inset:0;background:#fff;z-index:800;display:none;flex-direction:column">
+  <div class="lesson-bar">
+    <button class="btn btn-ghost btn-sm" onclick="closeLesson()">← Выйти</button>
+    <div class="lbar-prog">
+      <div class="lbar-fill" id="lbar-fill"></div>
+    </div>
+    <span class="lbar-label" id="lbar-label">1/1</span>
+    <div class="xp-pill" id="lbar-xp">⭐ 0</div>
+  </div>
+  <div class="lesson-body" id="lesson-body"></div>
+  <div class="lesson-nav">
+    <button class="btn btn-secondary" id="ls-prev" onclick="lsPrev()">← Назад</button>
+    <button class="btn btn-primary" id="ls-next" onclick="lsNext()">Продолжить →</button>
+  </div>
+</div>
+
+<!-- ══ ADMIN APP ═══════════════════════════════ -->
+<div id="screen-admin" class="screen">
+  <header class="topbar admin-topbar">
+    <div class="tb-l">
+      <button class="hamburger" onclick="toggleSide('admin-side')"><span style="background:rgba(255,255,255,.5)"></span><span style="background:rgba(255,255,255,.5)"></span><span style="background:rgba(255,255,255,.5)"></span></button>
+      <div class="topbar-brand">
+        <div class="tb-icon">🎓</div>
+        <div><div class="tb-name" style="color:#fff">Halyk Life Education <span class="admin-badge">ADMIN</span></div></div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="notif-btn" onclick="toggleNotif()" id="notif-btn">
+        🔔 <span class="notif-dot" id="notif-dot" style="display:none">3</span>
+      </div>
+      <div class="user-chip" onclick="toggleDrop('adm-drop')" style="color:rgba(255,255,255,.8)">
+        <div class="avatar admin-av">А</div><span>Администратор</span>
+        <div class="dropdown" id="adm-drop">
+          <div class="dd-item red" onclick="doLogout()">Выйти</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar admin-sidebar" id="admin-side">
+      <nav class="side-nav">
+        <button class="sn-item" data-at="adm-dash" onclick="aTab('adm-dash')"><span>📊</span>Дашборд</button>
+        <button class="sn-item" data-at="adm-users" onclick="aTab('adm-users')"><span>👥</span>Консультанты</button>
+        <button class="sn-item" data-at="adm-catalog" onclick="aTab('adm-catalog')"><span>📚</span>Каталог курсов</button>
+        <button class="sn-item" data-at="adm-content" onclick="aTab('adm-content')"><span>✏️</span>Контент</button>
+        <button class="sn-item" data-at="adm-results" onclick="aTab('adm-results')"><span>🎯</span>Результаты</button>
+        <button class="sn-item" data-at="adm-analytics" onclick="aTab('adm-analytics')"><span>📈</span>Аналитика</button>
+        <button class="sn-item" data-at="adm-assign" onclick="aTab('adm-assign')"><span>📋</span>Назначения</button>
+      </nav>
+    </aside>
+    <main class="main" id="admin-main">
+      <div class="page" id="apage-adm-dash"></div>
+      <div class="page" id="apage-adm-users"></div>
+      <div class="page" id="apage-adm-catalog"></div>
+      <div class="page" id="apage-adm-content"></div>
+      <div class="page" id="apage-adm-results"></div>
+      <div class="page" id="apage-adm-analytics"></div>
+      <div class="page" id="apage-adm-assign"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ NOTIFICATIONS PANEL ════════════════════ -->
+<div id="notif-panel" class="notif-panel" style="display:none">
+  <div class="notif-head">🔔 Уведомления <button onclick="clearNotifs()">Очистить</button></div>
+  <div id="notif-list"></div>
+</div>
+
+<!-- ══ MODAL OVERLAY ══════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal()" style="display:none"></div>
+
+<!-- User Add/Edit Modal -->
+<div id="modal-user" class="modal" style="display:none">
+  <div class="modal-head"><h3 id="modal-user-h">Новый консультант</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mu-id"/>
+    <div class="field-row">
+      <div class="field"><label>Имя *</label><input id="mu-first" type="text" placeholder="Айгерим"/></div>
+      <div class="field"><label>Фамилия *</label><input id="mu-last" type="text" placeholder="Жакупова"/></div>
+    </div>
+    <div class="field"><label>Логин *</label><input id="mu-login" type="text" placeholder="a.jakupova"/></div>
+    <div class="field"><label>Пароль *</label><input id="mu-pass" type="text" placeholder="Минимум 6 символов"/></div>
+    <div class="field"><label>Email</label><input id="mu-email" type="email" placeholder="email@halyklife.kz"/></div>
+    <div class="field"><label>Подразделение</label>
+      <select id="mu-dept">
+        <option>Алматы — Офис 1</option><option>Алматы — Офис 2</option>
+        <option>Астана — Офис 1</option><option>Астана — Офис 2</option>
+        <option>Шымкент</option><option>Атырау</option><option>Актобе</option>
+      </select>
+    </div>
+    <div class="field"><label>Дедлайн обучения</label><input id="mu-deadline" type="date"/></div>
+    <div class="field"><label>Статус</label>
+      <select id="mu-status"><option value="active">Активен</option><option value="blocked">Заблокирован</option></select>
+    </div>
+    <div class="field">
+      <label>Доступ к курсам</label>
+      <div class="access-hint">Отметьте курсы, доступные этому консультанту</div>
+      <div id="mu-courses" class="courses-checkboxes"></div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveUser()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Course Edit Modal -->
+<div id="modal-course" class="modal modal-lg" style="display:none">
+  <div class="modal-head"><h3 id="modal-course-h">Редактировать курс</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mc-id"/>
+    <div class="field-row">
+      <div class="field"><label>Название курса *</label><input id="mc-name" type="text"/></div>
+      <div class="field"><label>Иконка</label><input id="mc-icon" type="text" maxlength="4" style="max-width:80px"/></div>
+    </div>
+    <div class="field"><label>Описание</label><textarea id="mc-desc" rows="3"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Категория</label>
+        <select id="mc-cat"><option value="nsj">НСЖ (Накопительное)</option><option value="nonsj">Ненакопительное</option><option value="general">Общее</option><option value="sales">Продажи</option></select>
+      </div>
+      <div class="field"><label>Статус</label>
+        <select id="mc-status"><option value="active">Активен</option><option value="draft">Черновик</option><option value="wip">В разработке</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Цвет темы</label><input id="mc-color" type="color" value="#00A651"/></div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveCourse()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Module Edit Modal -->
+<div id="modal-module" class="modal modal-lg" style="display:none">
+  <div class="modal-head"><h3 id="modal-module-h">Редактировать модуль</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mm-cid"/><input type="hidden" id="mm-mid"/>
+    <div class="field"><label>Название модуля *</label><input id="mm-name" type="text"/></div>
+    <div class="field"><label>Описание</label><textarea id="mm-desc" rows="2"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Иконка</label><input id="mm-icon" type="text" maxlength="2" style="max-width:80px"/></div>
+      <div class="field"><label>Цвет</label><input id="mm-color" type="color" value="#00A651"/></div>
+      <div class="field"><label>Порядок №</label><input id="mm-order" type="number" min="1" value="1"/></div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveModule()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Lesson Edit Modal -->
+<div id="modal-lesson" class="modal modal-xl" style="display:none">
+  <div class="modal-head"><h3 id="modal-lesson-h">Редактировать урок</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="ml-cid"/><input type="hidden" id="ml-mid"/><input type="hidden" id="ml-lid"/>
+    <div class="field-row">
+      <div class="field" style="flex:2"><label>Название урока *</label><input id="ml-title" type="text"/></div>
+      <div class="field"><label>Тип</label>
+        <select id="ml-type" onchange="toggleLessonFields()">
+          <option value="story">📖 Урок</option>
+          <option value="quiz">📝 Тест</option>
+          <option value="case">💼 Кейс</option>
+          <option value="simulator">🎭 Симулятор</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Длительность (мин)</label><input id="ml-dur" type="number" min="1" value="5"/></div>
+      <div class="field"><label>XP за урок</label><input id="ml-xp" type="number" min="10" value="50"/></div>
+      <div class="field"><label>Баллы</label><input id="ml-pts" type="number" min="10" value="40"/></div>
+      <div class="field"><label>Порядок №</label><input id="ml-order" type="number" min="1" value="1"/></div>
+    </div>
+    <div id="ml-story-area">
+      <div class="field"><label>Вводный текст</label><textarea id="ml-intro" rows="3" placeholder="Краткое введение в тему урока..."></textarea></div>
+      <div class="field"><label>Основной текст (из нормативных документов)</label><textarea id="ml-text" rows="8" placeholder="Вставьте текст из нормативных документов..."></textarea></div>
+      <div class="field"><label>Ключевые тезисы (каждый с новой строки)</label><textarea id="ml-kp" rows="6" placeholder="• Тезис 1&#10;• Тезис 2"></textarea></div>
+    </div>
+    <div id="ml-quiz-area" style="display:none">
+      <div class="field"><label>Вопросы (JSON формат)</label><textarea id="ml-questions" rows="12" placeholder='[{"text":"Вопрос?","options":["A","B","C","D"],"correct":0,"explanation":"Пояснение"}]'></textarea></div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:5px">Формат: массив объектов с полями text, options[], correct (индекс), explanation</div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveLesson()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Assignment Modal -->
+<div id="modal-assign" class="modal" style="display:none">
+  <div class="modal-head"><h3>Назначить курс</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Кому назначить</label>
+      <select id="ass-who"><option value="all">Всем консультантам</option><option value="dept">По подразделению</option></select>
+    </div>
+    <div class="field"><label>Подразделение</label>
+      <select id="ass-dept"><option>Алматы — Офис 1</option><option>Алматы — Офис 2</option><option>Астана — Офис 1</option><option>Астана — Офис 2</option><option>Шымкент</option><option>Атырау</option></select>
+    </div>
+    <div class="field"><label>Курс</label><select id="ass-course"></select></div>
+    <div class="field"><label>Дедлайн</label><input id="ass-deadline" type="date"/></div>
+    <div class="field"><label>Приоритет</label>
+      <select id="ass-priority"><option value="mandatory">Обязательно</option><option value="recommended">Рекомендовано</option></select>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveAssignment()">Назначить</button>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
