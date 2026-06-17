@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Halyk Life Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g:#00A651;--gd:#007A3D;--gl:#E6F7EE;--gm:#C3EAD3;
+  --ink:#0F1923;--slate:#3D4A5C;--muted:#8A96A3;--border:#E2E8EF;
+  --mist:#F4F7F5;--white:#fff;
+  --blue:#3B82F6;--purple:#8B5CF6;--red:#EF4444;--amber:#F59E0B;
+  --pink:#EC4899;--teal:#14B8A6;
+  --r:12px;--rs:8px;--shadow:0 2px 12px rgba(15,25,35,.07);
+  --shadow-lg:0 8px 32px rgba(15,25,35,.14);--tr:.18s ease;
+  --topH:60px;--sideW:252px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px}
+body{font-family:'Inter',sans-serif;background:var(--mist);color:var(--ink);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Golos Text',sans-serif;line-height:1.25}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.active{display:flex}
+
+/* ── LOGIN ── */
+.login-bg{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F1923 0%,#1A2D1F 55%,#0D2518 100%);
+  padding:24px;position:relative;overflow:hidden;min-height:100vh}
+.login-bg::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;
+  background:rgba(0,166,81,.07);top:-150px;right:-150px;pointer-events:none}
+.login-bg::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;
+  background:rgba(0,166,81,.04);bottom:-80px;left:-100px;pointer-events:none}
+.login-brand{margin-bottom:28px;position:relative;z-index:1}
+.brand-mark{display:flex;align-items:center;gap:12px;justify-content:center}
+.brand-icon{width:52px;height:52px;background:var(--g);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.brand-name{font-family:'Golos Text',sans-serif;font-size:1.3rem;font-weight:700;color:#fff}
+.brand-sub{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:2px}
+.login-card{background:#fff;border-radius:18px;padding:38px 44px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;z-index:1}
+.login-title{font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.login-desc{font-size:.85rem;color:var(--muted);margin-bottom:22px}
+.login-err{background:#FFF5F5;border:1px solid #FED7D7;color:var(--red);font-size:.82rem;padding:9px 12px;border-radius:var(--rs);margin-bottom:14px}
+.login-hint{text-align:center;font-size:.74rem;color:var(--muted);margin-top:14px}
+.login-hint b{color:var(--slate)}
+.login-footer{margin-top:24px;font-size:.7rem;color:rgba(255,255,255,.25);position:relative;z-index:1}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:40px}
+.pw-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--topH);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:0 1px 4px rgba(0,0,0,.05);flex-shrink:0}
+.admin-topbar{background:var(--ink);border-color:rgba(255,255,255,.07)}
+.tb-l,.tb-r{display:flex;align-items:center;gap:10px}
+.topbar-brand{display:flex;align-items:center;gap:8px}
+.tb-icon{width:32px;height:32px;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.tb-name{font-family:'Golos Text',sans-serif;font-size:.95rem;font-weight:700;color:var(--ink)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:20px;height:2px;background:var(--slate);border-radius:2px}
+.xp-pill{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:1px solid #FDE68A;border-radius:20px;padding:4px 11px;font-size:.78rem;font-weight:700;color:#92400E}
+.streak-pill{background:linear-gradient(135deg,#FFF1F2,#FFE4E6);border:1px solid #FECDD3;border-radius:20px;padding:4px 11px;font-size:.78rem;font-weight:700;color:#9F1239}
+.admin-badge{font-size:.6rem;font-weight:700;background:rgba(0,166,81,.3);color:#4ADE80;padding:2px 6px;border-radius:5px;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle;margin-left:6px}
+.notif-btn{cursor:pointer;padding:6px 10px;border-radius:var(--rs);position:relative;font-size:1rem;color:rgba(255,255,255,.7);transition:background var(--tr)}
+.notif-btn:hover{background:rgba(255,255,255,.08)}
+.notif-dot{position:absolute;top:2px;right:2px;background:var(--red);color:#fff;font-size:.58rem;font-weight:700;border-radius:10px;padding:1px 4px}
+
+/* ── LAYOUT ── */
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - var(--topH))}
+.sidebar{width:var(--sideW);min-width:var(--sideW);background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;transition:transform var(--tr)}
+.admin-sidebar{background:var(--ink);border-color:rgba(255,255,255,.07)}
+.side-nav{flex:1;padding:12px 10px}
+.sn-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:var(--rs);font-size:.85rem;color:var(--slate);font-weight:500;cursor:pointer;transition:all var(--tr);margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.sn-item:hover{background:var(--mist);color:var(--ink)}
+.sn-item.active{background:var(--gl);color:var(--gd);font-weight:600}
+.admin-sidebar .sn-item{color:rgba(255,255,255,.55)}
+.admin-sidebar .sn-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.admin-sidebar .sn-item.active{background:rgba(0,166,81,.18);color:#4ADE80}
+.sn-item span{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sn-divider{height:1px;background:var(--border);margin:8px 4px}
+.sn-label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:5px 12px 5px}
+.side-footer{padding:12px 10px;border-top:1px solid var(--border)}
+.sf-user{display:flex;align-items:center;gap:9px}
+.sf-name{font-size:.83rem;font-weight:600;color:var(--ink)}
+.sf-role{font-size:.71rem;color:var(--muted)}
+.main{flex:1;overflow-y:auto}
+.page{display:none;padding:26px 28px;max-width:1080px}
+.page.active{display:block}
+
+/* ── USER CHIP / DROPDOWN ── */
+.user-chip{display:flex;align-items:center;gap:7px;cursor:pointer;padding:5px 10px;border-radius:var(--rs);font-size:.84rem;color:var(--slate);position:relative;user-select:none;border:none;background:none;font-family:inherit;transition:background var(--tr)}
+.user-chip:hover{background:var(--mist)}
+.admin-topbar .user-chip:hover{background:rgba(255,255,255,.07)}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0}
+.avatar.sm{width:26px;height:26px;font-size:.72rem}
+.avatar.admin-av{background:rgba(255,255,255,.18)}
+.dropdown{position:absolute;top:calc(100%+6px);right:0;background:#fff;border:1px solid var(--border);border-radius:var(--r);min-width:170px;box-shadow:var(--shadow-lg);display:none;z-index:400;overflow:hidden}
+.dropdown.open{display:block}
+.dd-item{padding:10px 16px;font-size:.85rem;color:var(--slate);cursor:pointer;transition:background var(--tr)}
+.dd-item:hover{background:var(--mist);color:var(--ink)}
+.dd-item.red{color:var(--red)}
+.dd-item.red:hover{background:#FFF5F5}
+.dd-sep{height:1px;background:var(--border);margin:4px 0}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--rs);font-family:'Inter',sans-serif;font-size:.86rem;font-weight:600;cursor:pointer;transition:all var(--tr);border:none;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--g);color:#fff}
+.btn-primary:hover{background:var(--gd)}
+.btn-primary:disabled{background:var(--muted);cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--slate);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--slate);color:var(--ink)}
+.btn-secondary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:none;color:var(--muted);border:1px solid transparent}
+.btn-ghost:hover{background:var(--mist);color:var(--slate)}
+.btn-danger{background:none;color:var(--red);border:1px solid #FECACA}
+.btn-danger:hover{background:#FFF5F5}
+.btn-warn{background:none;color:var(--amber);border:1px solid #FDE68A}
+.btn-warn:hover{background:#FFFBEB}
+.btn-sm{padding:5px 11px;font-size:.78rem}
+.btn-lg{padding:12px 24px;font-size:.95rem}
+.btn-full{width:100%;justify-content:center}
+
+/* ── FIELDS ── */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.76rem;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:'Inter',sans-serif;font-size:.88rem;color:var(--ink);background:#fff;outline:none;transition:border-color var(--tr),box-shadow var(--tr)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(0,166,81,.1)}
+.field textarea{resize:vertical;min-height:80px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* ── STAT CARDS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:22px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px 20px}
+.stat-card.green{border-color:var(--gm);background:linear-gradient(135deg,#fff,var(--gl))}
+.stat-icon{font-size:1.3rem;margin-bottom:7px}
+.stat-val{font-size:1.5rem;font-weight:800;color:var(--ink)}
+.stat-card.green .stat-val{color:var(--g)}
+.stat-lab{font-size:.76rem;color:var(--muted);margin-top:2px}
+
+/* ── SECTION TITLE ── */
+.section-title{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.view-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.view-header h2{font-size:1.4rem;font-weight:800;color:var(--ink)}
+.view-header p{font-size:.85rem;color:var(--muted);margin-top:3px}
+
+/* ── COURSE CARDS ── */
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.course-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px;cursor:pointer;transition:all var(--tr);position:relative;overflow:hidden}
+.course-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cc,var(--g));opacity:0;transition:opacity var(--tr)}
+.course-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--cc,var(--gm))}
+.course-card:hover::before{opacity:1}
+.course-card.wip{opacity:.65;cursor:default}
+.course-card.wip:hover{transform:none;box-shadow:none}
+.cc-icon{font-size:1.9rem;margin-bottom:11px}
+.cc-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.69rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.cc-name{font-size:.98rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.cc-desc{font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.cc-meta{display:flex;gap:12px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);padding-top:11px}
+.wip-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.6);border-radius:var(--r);backdrop-filter:blur(1px);font-size:.82rem;font-weight:700;color:var(--amber)}
+.prog-bar{height:5px;background:var(--mist);border-radius:5px;overflow:hidden;margin-top:10px}
+.prog-fill{height:100%;border-radius:5px;transition:width .5s ease}
+.prog-label{font-size:.73rem;color:var(--muted);margin-top:4px}
+
+/* ── CATEGORY SECTION ── */
+.cat-section{margin-bottom:32px}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--g)}
+.cat-title{font-size:1.1rem;font-weight:700;color:var(--ink)}
+.cat-badge{font-size:.72rem;background:var(--gl);color:var(--gd);padding:3px 10px;border-radius:20px;font-weight:600}
+
+/* ── MODULE CARDS ── */
+.module-list{display:flex;flex-direction:column;gap:10px}
+.module-row{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;transition:all var(--tr);display:flex;align-items:center;gap:14px}
+.module-row:hover{box-shadow:var(--shadow);border-color:var(--gm)}
+.module-row.done{border-color:var(--gm)}
+.mr-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.mr-info{flex:1}
+.mr-name{font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.mr-desc{font-size:.78rem;color:var(--muted)}
+.mr-meta{display:flex;gap:14px;margin-top:7px;font-size:.74rem;color:var(--muted)}
+.mr-right{text-align:right;flex-shrink:0}
+.mr-pct{font-size:.9rem;font-weight:800;color:var(--g)}
+.lesson-list{margin-top:12px;padding-left:8px}
+.lesson-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--rs);cursor:pointer;transition:background var(--tr)}
+.lesson-row:hover{background:var(--mist)}
+.lesson-row.done .lr-num{background:var(--g);color:#fff}
+.lesson-row.active .lr-num{background:var(--gd);color:#fff}
+.lr-num{width:24px;height:24px;border-radius:50%;background:var(--border);color:var(--muted);font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lr-name{font-size:.84rem;color:var(--slate);flex:1}
+.lr-type{font-size:.72rem;color:var(--muted)}
+
+/* ── LESSON SHELL ── */
+.lesson-bar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 20px;flex-shrink:0}
+.lbar-prog{flex:1;height:6px;background:var(--mist);border-radius:6px;overflow:hidden}
+.lbar-fill{height:100%;background:var(--g);border-radius:6px;transition:width .4s ease}
+.lbar-label{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.lesson-body{flex:1;overflow-y:auto;padding:28px 24px;max-width:760px;margin:0 auto;width:100%}
+.lesson-nav{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-shrink:0}
+.lesson-title-wrap{margin-bottom:18px}
+.lesson-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g);margin-bottom:5px}
+.lesson-title{font-size:1.4rem;font-weight:800;color:var(--ink);margin-bottom:6px}
+.lesson-meta-row{display:flex;gap:14px;font-size:.77rem;color:var(--muted)}
+.lesson-intro{font-size:.95rem;color:var(--slate);line-height:1.72;padding:18px 22px;background:var(--mist);border-left:4px solid var(--g);border-radius:0 var(--rs) var(--rs) 0;margin-bottom:22px}
+.block{margin-bottom:20px}
+.block-highlight{background:linear-gradient(135deg,var(--gl),#fff);border:1px solid var(--gm);border-radius:var(--r);padding:18px 22px;display:flex;gap:13px}
+.bh-icon{font-size:1.4rem;flex-shrink:0}
+.bh-title{font-size:.88rem;font-weight:700;color:var(--gd);margin-bottom:5px}
+.bh-text{font-size:.88rem;color:var(--slate);line-height:1.65}
+.block-vnd{background:var(--mist);border-left:4px solid var(--g);border-radius:0 var(--rs) var(--rs) 0;padding:18px 22px;margin-bottom:20px}
+.vnd-label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gd);margin-bottom:7px}
+.vnd-text{font-size:.88rem;color:var(--slate);line-height:1.75}
+.block-kp .kp-title{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.kp-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--slate)}
+.kp-item:last-child{border-bottom:none}
+.kp-item::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}
+.block-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:18px}
+.info-card{background:#fff;border:1px solid var(--border);border-radius:var(--rs);padding:14px}
+.ic-icon{font-size:1.2rem;margin-bottom:7px}
+.ic-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.ic-value{font-size:.92rem;font-weight:700;color:var(--ink);margin-top:3px}
+.block-warning{background:#FFF5F5;border:1px solid #FECACA;border-radius:var(--r);padding:16px 20px}
+.bw-title{font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:9px}
+.bw-item{font-size:.84rem;color:#7F1D1D;padding:5px 0;border-bottom:1px solid #FEE2E2;display:flex;gap:8px}
+.bw-item:last-child{border-bottom:none}
+.bw-item::before{content:'✗';color:var(--red);font-weight:700;flex-shrink:0}
+.block-tip{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid #BFDBFE;border-radius:var(--r);padding:16px 20px;display:flex;gap:11px}
+.bt-title{font-size:.82rem;font-weight:700;color:#1E40AF;margin-bottom:4px}
+.bt-text{font-size:.85rem;color:#1E3A8A;line-height:1.6;font-style:italic}
+.block-two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.tc-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:16px}
+.tc-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.tc-title{font-size:.88rem;font-weight:700}
+.tc-item{font-size:.82rem;color:var(--slate);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:7px}
+.tc-item:last-child{border-bottom:none}
+.tc-item::before{content:'→';color:var(--g);font-weight:700;flex-shrink:0}
+.block-formula{background:var(--ink);color:#fff;border-radius:var(--r);padding:20px 26px;text-align:center;margin-bottom:18px}
+.bf-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:8px}
+.bf-formula{font-size:1.05rem;font-weight:700;color:#4ADE80;font-family:'Golos Text',sans-serif;margin-bottom:6px}
+.bf-note{font-size:.78rem;color:rgba(255,255,255,.55)}
+.block-table{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.bt-row{display:grid;padding:11px 16px;border-bottom:1px solid var(--border);font-size:.84rem}
+.bt-row:last-child{border-bottom:none}
+.bt-row.head{background:var(--mist);font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.bt-row:not(.head):nth-child(even){background:var(--mist)}
+.block-new{background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border:1.5px solid #C7D2FE;border-radius:var(--r);padding:16px 20px;margin-bottom:18px}
+.bn-title{font-size:.84rem;font-weight:700;color:#3730A3;margin-bottom:5px}
+.bn-text{font-size:.83rem;color:#3730A3;opacity:.85;line-height:1.6}
+.block-sales{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid var(--gm);border-radius:var(--r);padding:16px 20px;display:flex;gap:11px;margin-bottom:18px}
+.bs-title{font-size:.82rem;font-weight:700;color:var(--gd);margin-bottom:4px}
+.bs-text{font-size:.85rem;color:#14532D;line-height:1.6;font-style:italic}
+
+/* ── QUIZ ── */
+.quiz-wrap{max-width:620px;margin:0 auto}
+.q-progress{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.q-num{font-size:.77rem;color:var(--muted);white-space:nowrap}
+.q-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:14px}
+.q-text{font-size:.98rem;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:16px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:11px;padding:11px 15px;border:1.5px solid var(--border);border-radius:var(--rs);cursor:pointer;transition:all var(--tr)}
+.opt:hover{border-color:var(--gm);background:var(--gl)}
+.opt.selected{border-color:var(--g);background:var(--gl)}
+.opt.correct{border-color:var(--g);background:#D1FAE5;pointer-events:none}
+.opt.wrong{border-color:var(--red);background:#FEE2E2;pointer-events:none}
+.opt-dot{width:17px;height:17px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all var(--tr)}
+.opt.selected .opt-dot,.opt.correct .opt-dot{border-color:var(--g);background:var(--g)}
+.opt.wrong .opt-dot{border-color:var(--red);background:var(--red)}
+.opt-text{font-size:.88rem;color:var(--slate)}
+.q-explain{font-size:.83rem;background:var(--mist);border-radius:var(--rs);padding:11px 14px;border-left:3px solid var(--g);margin-top:9px;display:none;line-height:1.6}
+.q-explain.show{display:block}
+
+/* ── COMPLETION ── */
+.completion{text-align:center;padding:50px 24px;max-width:520px;margin:0 auto}
+.compl-icon{font-size:4rem;margin-bottom:14px;animation:pop .5s ease}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.compl-title{font-size:1.7rem;font-weight:800;color:var(--ink);margin-bottom:7px}
+.compl-sub{font-size:.9rem;color:var(--muted);margin-bottom:20px}
+.compl-pts{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;border-radius:20px;padding:9px 20px;font-size:.95rem;font-weight:800;margin-bottom:20px}
+.compl-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ── PROGRESS ── */
+.prog-course-row{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:11px}
+.pcr-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.pcr-name{font-size:.9rem;font-weight:600;color:var(--ink)}
+.pcr-pct{font-size:.82rem;font-weight:700;color:var(--g)}
+.pcr-meta{display:flex;gap:16px;margin-top:7px;font-size:.74rem;color:var(--muted)}
+
+/* ── CERTS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.cert-card{background:linear-gradient(135deg,#fff 60%,var(--gl));border:1.5px solid var(--gm);border-radius:var(--r);padding:22px;position:relative;overflow:hidden}
+.cert-card::after{content:'🏆';position:absolute;right:14px;top:12px;font-size:1.8rem;opacity:.15}
+.cert-badge{font-size:.72rem;font-weight:700;background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:7px}
+.cert-name{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:5px}
+.cert-score{font-size:1.6rem;font-weight:800;color:var(--g);margin:8px 0 4px}
+.cert-date{font-size:.74rem;color:var(--muted)}
+
+/* ── LEADERBOARD ── */
+.lb-row{display:flex;align-items:center;gap:11px;padding:11px 15px;border-radius:var(--r);background:#fff;border:1px solid var(--border);margin-bottom:8px;transition:box-shadow var(--tr)}
+.lb-row:hover{box-shadow:var(--shadow)}
+.lb-row.me{border-color:var(--gm);background:var(--gl)}
+.lb-rank{width:26px;text-align:center;font-size:.9rem;font-weight:800;color:var(--muted)}
+.lb-av{width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0}
+.lb-info{flex:1}
+.lb-name{font-size:.88rem;font-weight:600;color:var(--ink)}
+.lb-dept{font-size:.72rem;color:var(--muted)}
+.lb-pts{font-size:.95rem;font-weight:800;color:var(--g)}
+
+/* ── ACHIEVEMENTS ── */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:11px}
+.ach-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+.ach-card.earned{border-color:var(--gm);background:var(--gl)}
+.ach-card.locked{opacity:.4;filter:grayscale(.8)}
+.ach-icon{font-size:1.8rem;margin-bottom:7px}
+.ach-name{font-size:.84rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.ach-desc{font-size:.74rem;color:var(--muted);line-height:1.4}
+.ach-pts{font-size:.73rem;font-weight:700;color:var(--g);margin-top:5px}
+
+/* ── ADMIN TABLE ── */
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto}
+.adm-table{width:100%;border-collapse:collapse;min-width:700px}
+.adm-table th{text-align:left;padding:10px 15px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--mist);border-bottom:1px solid var(--border)}
+.adm-table td{padding:12px 15px;font-size:.85rem;color:var(--slate);border-bottom:1px solid var(--border);vertical-align:middle}
+.adm-table tr:last-child td{border-bottom:none}
+.adm-table tr:hover td{background:#fafbfb}
+.actions-cell{display:flex;gap:6px;flex-wrap:wrap}
+.status-badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:700}
+.sb-active{background:var(--gl);color:var(--gd)}
+.sb-blocked{background:#FEE2E2;color:#7F1D1D}
+.sb-draft{background:#FEF3C7;color:#78350F}
+.sb-wip{background:#E0E7FF;color:#3730A3}
+
+/* ── ADMIN FILTER BAR ── */
+.filter-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-bar input,.filter-bar select{padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--rs);font-size:.84rem;outline:none;background:#fff;color:var(--ink)}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--g)}
+.filter-search{min-width:240px}
+
+/* ── CONTENT EDITOR ── */
+.content-tree{display:grid;grid-template-columns:280px 1fr;gap:20px}
+.tree-panel{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.tree-header{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;background:var(--mist)}
+.tree-item{padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--tr);display:flex;align-items:center;gap:9px;font-size:.85rem}
+.tree-item:hover{background:var(--mist)}
+.tree-item.active{background:var(--gl);color:var(--gd);font-weight:600}
+.tree-item.sub{padding-left:30px;font-size:.8rem}
+.tree-item.sub2{padding-left:46px;font-size:.77rem;color:var(--muted)}
+.detail-panel{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px}
+.detail-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:600;backdrop-filter:blur(2px)}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;width:90%;max-width:500px;max-height:92vh;overflow-y:auto;z-index:700;box-shadow:var(--shadow-lg)}
+.modal-lg{max-width:620px}
+.modal-xl{max-width:750px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 14px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:1rem;font-weight:700;color:var(--ink)}
+.modal-head button{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;padding:3px 8px;border-radius:4px}
+.modal-head button:hover{background:var(--mist)}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:14px 22px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+.access-hint{font-size:.76rem;color:var(--muted);margin-bottom:9px}
+.courses-checkboxes{max-height:180px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.check-item{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.86rem;color:var(--slate);padding:4px 0}
+.check-item input{accent-color:var(--g);width:15px;height:15px;cursor:pointer}
+
+/* ── NOTIFICATIONS ── */
+.notif-panel{position:fixed;top:68px;right:18px;width:330px;background:#fff;border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-lg);z-index:500;max-height:420px;overflow-y:auto}
+.notif-head{padding:12px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:.88rem;display:flex;justify-content:space-between;align-items:center}
+.notif-head button{background:none;border:none;font-size:.74rem;color:var(--muted);cursor:pointer}
+.notif-item{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:9px}
+.notif-item:last-child{border-bottom:none}
+.ni-icon{font-size:1rem;flex-shrink:0}
+.ni-text{font-size:.82rem;color:var(--ink);line-height:1.45}
+.ni-time{font-size:.7rem;color:var(--muted);margin-top:2px}
+
+/* ── ASSIGNMENT CARDS ── */
+.assign-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:11px;display:flex;align-items:center;gap:16px}
+.ac-icon{font-size:1.4rem;flex-shrink:0}
+.ac-info{flex:1}
+.ac-title{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.ac-meta{font-size:.76rem;color:var(--muted)}
+.ac-deadline{font-size:.84rem;font-weight:700}
+.ac-deadline.urgent{color:var(--red)}
+.ac-deadline.soon{color:var(--amber)}
+.ac-deadline.ok{color:var(--g)}
+
+/* ── TOAST ── */
+#toast-wrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:11px 17px;border-radius:var(--rs);font-size:.85rem;font-weight:600;box-shadow:var(--shadow-lg);animation:slideIn .2s ease;display:flex;align-items:center;gap:8px;max-width:320px}
+.toast.info{background:var(--ink);color:#fff}
+.toast.success{background:var(--gd);color:#fff}
+.toast.points{background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff}
+.toast.error{background:var(--red);color:#fff}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── HERO BANNER ── */
+.hero-banner{background:linear-gradient(135deg,#0F1923,#1a3a24);border-radius:14px;padding:26px 30px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden}
+.hero-banner::before{content:'🎓';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:4.5rem;opacity:.1}
+.hb-ey{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.45);margin-bottom:6px}
+.hb-title{font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.hb-sub{font-size:.86rem;color:rgba(255,255,255,.65);margin-bottom:16px;max-width:480px}
+.hb-stats{display:flex;gap:20px}
+.hbs-val{font-size:1.4rem;font-weight:800;color:#4ADE80}
+.hbs-lab{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:1px}
+
+/* ── ANALYTICS CHARTS (CSS-based) ── */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:160px;padding:0 4px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:5px 5px 0 0;background:var(--g);transition:height .5s ease;min-height:4px}
+.bar-val{font-size:.7rem;font-weight:700;color:var(--g)}
+.bar-lbl{font-size:.68rem;color:var(--muted)}
+
+/* ── UTILITY ── */
+.hidden{display:none!important}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty span{font-size:2.5rem;display:block;margin-bottom:11px}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:600}
+.tag-nsj{background:var(--gl);color:var(--gd)}
+.tag-sales{background:#FEF3C7;color:#78350F}
+.tag-general{background:#E0E7FF;color:#3730A3}
+.tag-wip{background:#F1F5F9;color:var(--muted)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .sidebar{position:fixed;left:calc(0px - var(--sideW));top:0;bottom:0;height:100vh;z-index:300}
+  .sidebar.open{left:0;box-shadow:var(--shadow-lg)}
+  .hamburger{display:flex}
+  .page{padding:16px 14px}
+  .field-row{grid-template-columns:1fr}
+  .block-two-col,.block-cards{grid-template-columns:1fr}
+  .content-tree{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .courses-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hb-stats{gap:12px}
+  .ach-grid{grid-template-columns:repeat(2,1fr)}
+  .certs-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════ -->
+<div id="screen-login" class="screen active">
+  <div class="login-bg">
+    <div class="login-brand">
+      <div class="brand-mark">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <div class="brand-name">Halyk Life Education</div>
+          <div class="brand-sub">ПЛАТФОРМА ДИСТАНЦИОННОГО ОБУЧЕНИЯ</div>
+        </div>
+      </div>
+    </div>
+    <div class="login-card">
+      <h1 class="login-title">Добро пожаловать</h1>
+      <p class="login-desc">Войдите для доступа к учебным материалам</p>
+      <div id="login-err" class="login-err" style="display:none">Неверный логин или пароль</div>
+      <div class="field"><label>Логин</label><input id="l-login" type="text" placeholder="Введите логин" autocomplete="username"/></div>
+      <div class="field"><label>Пароль</label>
+        <div class="pw-wrap"><input id="l-pass" type="password" placeholder="Введите пароль" autocomplete="current-password"/>
+        <button class="pw-eye" onclick="togglePw()">👁</button></div>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="doLogin()">Войти</button>
+      <div class="login-hint">Демо: <b>admin/admin123</b> · <b>user/user123</b> · <b>konsult/pass123</b></div>
+    </div>
+    <div class="login-footer">© 2026 АО «Халық-Life». Все права защищены.</div>
+  </div>
+</div>
+
+<!-- ══ USER APP ════════════════════════════════ -->
+<div id="screen-user" class="screen">
+  <header class="topbar">
+    <div class="tb-l">
+      <button class="hamburger" onclick="toggleSide('user-side')"><span></span><span></span><span></span></button>
+      <div class="topbar-brand">
+        <div class="tb-icon">🎓</div>
+        <div><div class="tb-name">Halyk Life Education</div></div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="xp-pill">⭐ <span id="u-xp">0</span> XP</div>
+      <div class="streak-pill">🔥 <span id="u-streak">0</span></div>
+      <div class="user-chip" onclick="toggleDrop('u-drop')">
+        <div class="avatar" id="u-avatar">К</div>
+        <span id="u-name">—</span>
+        <div class="dropdown" id="u-drop">
+          <div class="dd-item" onclick="uPage('progress')">📊 Прогресс</div>
+          <div class="dd-item" onclick="uPage('certs')">🎓 Сертификаты</div>
+          <div class="dd-sep"></div>
+          <div class="dd-item red" onclick="doLogout()">Выйти</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="user-side">
+      <nav class="side-nav">
+        <button class="sn-item" data-p="home" onclick="uPage('home')"><span>🏠</span>Главная</button>
+        <button class="sn-item" data-p="my-courses" onclick="uPage('my-courses')"><span>📖</span>Мои курсы</button>
+        <button class="sn-item" data-p="progress" onclick="uPage('progress')"><span>📊</span>Прогресс</button>
+        <button class="sn-item" data-p="certs" onclick="uPage('certs')"><span>🏅</span>Сертификаты</button>
+        <button class="sn-item" data-p="leaderboard" onclick="uPage('leaderboard')"><span>🏆</span>Рейтинг</button>
+        <div class="sn-divider"></div>
+        <div class="sn-label">Накопительное НСЖ</div>
+        <div id="side-nsj"></div>
+        <div class="sn-divider"></div>
+        <div class="sn-label">Ненакопительное <span style="font-size:.65rem;color:var(--amber);background:#FEF3C7;padding:1px 5px;border-radius:6px">Скоро</span></div>
+        <div id="side-nonsj"></div>
+      </nav>
+      <div class="side-footer">
+        <div class="sf-user">
+          <div class="avatar sm" id="side-av">К</div>
+          <div><div id="side-uname" class="sf-name">—</div><div class="sf-role">Консультант</div></div>
+        </div>
+      </div>
+    </aside>
+    <main class="main" id="user-main">
+      <div class="page" id="upage-home"></div>
+      <div class="page" id="upage-my-courses"></div>
+      <div class="page" id="upage-progress"></div>
+      <div class="page" id="upage-certs"></div>
+      <div class="page" id="upage-leaderboard"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ LESSON SHELL ════════════════════════════ -->
+<div id="lesson-shell" style="display:none;position:fixed;inset:0;background:#fff;z-index:800;display:none;flex-direction:column">
+  <div class="lesson-bar">
+    <button class="btn btn-ghost btn-sm" onclick="closeLesson()">← Выйти</button>
+    <div class="lbar-prog">
+      <div class="lbar-fill" id="lbar-fill"></div>
+    </div>
+    <span class="lbar-label" id="lbar-label">1/1</span>
+    <div class="xp-pill" id="lbar-xp">⭐ 0</div>
+  </div>
+  <div class="lesson-body" id="lesson-body"></div>
+  <div class="lesson-nav">
+    <button class="btn btn-secondary" id="ls-prev" onclick="lsPrev()">← Назад</button>
+    <button class="btn btn-primary" id="ls-next" onclick="lsNext()">Продолжить →</button>
+  </div>
+</div>
+
+<!-- ══ ADMIN APP ═══════════════════════════════ -->
+<div id="screen-admin" class="screen">
+  <header class="topbar admin-topbar">
+    <div class="tb-l">
+      <button class="hamburger" onclick="toggleSide('admin-side')"><span style="background:rgba(255,255,255,.5)"></span><span style="background:rgba(255,255,255,.5)"></span><span style="background:rgba(255,255,255,.5)"></span></button>
+      <div class="topbar-brand">
+        <div class="tb-icon">🎓</div>
+        <div><div class="tb-name" style="color:#fff">Halyk Life Education <span class="admin-badge">ADMIN</span></div></div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="notif-btn" onclick="toggleNotif()" id="notif-btn">
+        🔔 <span class="notif-dot" id="notif-dot" style="display:none">3</span>
+      </div>
+      <div class="user-chip" onclick="toggleDrop('adm-drop')" style="color:rgba(255,255,255,.8)">
+        <div class="avatar admin-av">А</div><span>Администратор</span>
+        <div class="dropdown" id="adm-drop">
+          <div class="dd-item red" onclick="doLogout()">Выйти</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar admin-sidebar" id="admin-side">
+      <nav class="side-nav">
+        <button class="sn-item" data-at="adm-dash" onclick="aTab('adm-dash')"><span>📊</span>Дашборд</button>
+        <button class="sn-item" data-at="adm-users" onclick="aTab('adm-users')"><span>👥</span>Консультанты</button>
+        <button class="sn-item" data-at="adm-catalog" onclick="aTab('adm-catalog')"><span>📚</span>Каталог курсов</button>
+        <button class="sn-item" data-at="adm-content" onclick="aTab('adm-content')"><span>✏️</span>Контент</button>
+        <button class="sn-item" data-at="adm-results" onclick="aTab('adm-results')"><span>🎯</span>Результаты</button>
+        <button class="sn-item" data-at="adm-analytics" onclick="aTab('adm-analytics')"><span>📈</span>Аналитика</button>
+        <button class="sn-item" data-at="adm-assign" onclick="aTab('adm-assign')"><span>📋</span>Назначения</button>
+      </nav>
+    </aside>
+    <main class="main" id="admin-main">
+      <div class="page" id="apage-adm-dash"></div>
+      <div class="page" id="apage-adm-users"></div>
+      <div class="page" id="apage-adm-catalog"></div>
+      <div class="page" id="apage-adm-content"></div>
+      <div class="page" id="apage-adm-results"></div>
+      <div class="page" id="apage-adm-analytics"></div>
+      <div class="page" id="apage-adm-assign"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ NOTIFICATIONS PANEL ════════════════════ -->
+<div id="notif-panel" class="notif-panel" style="display:none">
+  <div class="notif-head">🔔 Уведомления <button onclick="clearNotifs()">Очистить</button></div>
+  <div id="notif-list"></div>
+</div>
+
+<!-- ══ MODAL OVERLAY ══════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal()" style="display:none"></div>
+
+<!-- User Add/Edit Modal -->
+<div id="modal-user" class="modal" style="display:none">
+  <div class="modal-head"><h3 id="modal-user-h">Новый консультант</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mu-id"/>
+    <div class="field-row">
+      <div class="field"><label>Имя *</label><input id="mu-first" type="text" placeholder="Айгерим"/></div>
+      <div class="field"><label>Фамилия *</label><input id="mu-last" type="text" placeholder="Жакупова"/></div>
+    </div>
+    <div class="field"><label>Логин *</label><input id="mu-login" type="text" placeholder="a.jakupova"/></div>
+    <div class="field"><label>Пароль *</label><input id="mu-pass" type="text" placeholder="Минимум 6 символов"/></div>
+    <div class="field"><label>Email</label><input id="mu-email" type="email" placeholder="email@halyklife.kz"/></div>
+    <div class="field"><label>Подразделение</label>
+      <select id="mu-dept">
+        <option>Алматы — Офис 1</option><option>Алматы — Офис 2</option>
+        <option>Астана — Офис 1</option><option>Астана — Офис 2</option>
+        <option>Шымкент</option><option>Атырау</option><option>Актобе</option>
+      </select>
+    </div>
+    <div class="field"><label>Дедлайн обучения</label><input id="mu-deadline" type="date"/></div>
+    <div class="field"><label>Статус</label>
+      <select id="mu-status"><option value="active">Активен</option><option value="blocked">Заблокирован</option></select>
+    </div>
+    <div class="field">
+      <label>Доступ к курсам</label>
+      <div class="access-hint">Отметьте курсы, доступные этому консультанту</div>
+      <div id="mu-courses" class="courses-checkboxes"></div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveUser()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Course Edit Modal -->
+<div id="modal-course" class="modal modal-lg" style="display:none">
+  <div class="modal-head"><h3 id="modal-course-h">Редактировать курс</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mc-id"/>
+    <div class="field-row">
+      <div class="field"><label>Название курса *</label><input id="mc-name" type="text"/></div>
+      <div class="field"><label>Иконка</label><input id="mc-icon" type="text" maxlength="4" style="max-width:80px"/></div>
+    </div>
+    <div class="field"><label>Описание</label><textarea id="mc-desc" rows="3"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Категория</label>
+        <select id="mc-cat"><option value="nsj">НСЖ (Накопительное)</option><option value="nonsj">Ненакопительное</option><option value="general">Общее</option><option value="sales">Продажи</option></select>
+      </div>
+      <div class="field"><label>Статус</label>
+        <select id="mc-status"><option value="active">Активен</option><option value="draft">Черновик</option><option value="wip">В разработке</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Цвет темы</label><input id="mc-color" type="color" value="#00A651"/></div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveCourse()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Module Edit Modal -->
+<div id="modal-module" class="modal modal-lg" style="display:none">
+  <div class="modal-head"><h3 id="modal-module-h">Редактировать модуль</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="mm-cid"/><input type="hidden" id="mm-mid"/>
+    <div class="field"><label>Название модуля *</label><input id="mm-name" type="text"/></div>
+    <div class="field"><label>Описание</label><textarea id="mm-desc" rows="2"></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Иконка</label><input id="mm-icon" type="text" maxlength="2" style="max-width:80px"/></div>
+      <div class="field"><label>Цвет</label><input id="mm-color" type="color" value="#00A651"/></div>
+      <div class="field"><label>Порядок №</label><input id="mm-order" type="number" min="1" value="1"/></div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveModule()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Lesson Edit Modal -->
+<div id="modal-lesson" class="modal modal-xl" style="display:none">
+  <div class="modal-head"><h3 id="modal-lesson-h">Редактировать урок</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="ml-cid"/><input type="hidden" id="ml-mid"/><input type="hidden" id="ml-lid"/>
+    <div class="field-row">
+      <div class="field" style="flex:2"><label>Название урока *</label><input id="ml-title" type="text"/></div>
+      <div class="field"><label>Тип</label>
+        <select id="ml-type" onchange="toggleLessonFields()">
+          <option value="story">📖 Урок</option>
+          <option value="quiz">📝 Тест</option>
+          <option value="case">💼 Кейс</option>
+          <option value="simulator">🎭 Симулятор</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Длительность (мин)</label><input id="ml-dur" type="number" min="1" value="5"/></div>
+      <div class="field"><label>XP за урок</label><input id="ml-xp" type="number" min="10" value="50"/></div>
+      <div class="field"><label>Баллы</label><input id="ml-pts" type="number" min="10" value="40"/></div>
+      <div class="field"><label>Порядок №</label><input id="ml-order" type="number" min="1" value="1"/></div>
+    </div>
+    <div id="ml-story-area">
+      <div class="field"><label>Вводный текст</label><textarea id="ml-intro" rows="3" placeholder="Краткое введение в тему урока..."></textarea></div>
+      <div class="field"><label>Основной текст (из нормативных документов)</label><textarea id="ml-text" rows="8" placeholder="Вставьте текст из нормативных документов..."></textarea></div>
+      <div class="field"><label>Ключевые тезисы (каждый с новой строки)</label><textarea id="ml-kp" rows="6" placeholder="• Тезис 1&#10;• Тезис 2"></textarea></div>
+    </div>
+    <div id="ml-quiz-area" style="display:none">
+      <div class="field"><label>Вопросы (JSON формат)</label><textarea id="ml-questions" rows="12" placeholder='[{"text":"Вопрос?","options":["A","B","C","D"],"correct":0,"explanation":"Пояснение"}]'></textarea></div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:5px">Формат: массив объектов с полями text, options[], correct (индекс), explanation</div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveLesson()">Сохранить</button>
+  </div>
+</div>
+
+<!-- Assignment Modal -->
+<div id="modal-assign" class="modal" style="display:none">
+  <div class="modal-head"><h3>Назначить курс</h3><button onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Кому назначить</label>
+      <select id="ass-who"><option value="all">Всем консультантам</option><option value="dept">По подразделению</option></select>
+    </div>
+    <div class="field"><label>Подразделение</label>
+      <select id="ass-dept"><option>Алматы — Офис 1</option><option>Алматы — Офис 2</option><option>Астана — Офис 1</option><option>Астана — Офис 2</option><option>Шымкент</option><option>Атырау</option></select>
+    </div>
+    <div class="field"><label>Курс</label><select id="ass-course"></select></div>
+    <div class="field"><label>Дедлайн</label><input id="ass-deadline" type="date"/></div>
+    <div class="field"><label>Приоритет</label>
+      <select id="ass-priority"><option value="mandatory">Обязательно</option><option value="recommended">Рекомендовано</option></select>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+    <button class="btn btn-primary" onclick="saveAssignment()">Назначить</button>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+<script>
+// ═══════════════════════════════════════════════════
+// HALYK LIFE EDUCATION — DATABASE
+// ═══════════════════════════════════════════════════
+
+// ── USERS ──────────────────────────────────────────
+let DB_USERS = [
+  { id:1, login:'admin',   pass:'admin123', role:'admin',  firstName:'Администратор', lastName:'',          dept:'Головной офис',  email:'admin@halyklife.kz',      status:'active', deadline:null,         courses:'all', avatar:'А' },
+  { id:2, login:'user',    pass:'user123',  role:'user',   firstName:'Айгерим',       lastName:'Жакупова',  dept:'Алматы — Офис 1',email:'a.jakupova@halyklife.kz', status:'active', deadline:'2025-08-31', courses:[1,2,3,4], avatar:'А' },
+  { id:3, login:'konsult', pass:'pass123',  role:'user',   firstName:'Нурлан',        lastName:'Сейткали',  dept:'Астана — Офис 2',email:'n.seitkali@halyklife.kz', status:'active', deadline:'2025-07-31', courses:[1,2],    avatar:'Н' },
+  { id:4, login:'dana',    pass:'dana123',  role:'user',   firstName:'Дана',          lastName:'Ахметова',  dept:'Алматы — Офис 2',email:'d.ahmetova@halyklife.kz', status:'active', deadline:'2025-08-15', courses:[1,3],    avatar:'Д' },
+  { id:5, login:'baur',    pass:'baur123',  role:'user',   firstName:'Бауыржан',      lastName:'Касымов',   dept:'Шымкент',        email:'b.kasymov@halyklife.kz',  status:'active', deadline:'2025-07-31', courses:[1],      avatar:'Б' },
+  { id:6, login:'marat',   pass:'mar123',   role:'user',   firstName:'Марат',         lastName:'Дюсенов',   dept:'Астана — Офис 1',email:'m.dusenov@halyklife.kz',  status:'blocked',deadline:'2025-07-01', courses:[],       avatar:'М' },
+];
+
+// ── COURSES ────────────────────────────────────────
+let DB_COURSES = [
+  {
+    id:1, name:'Байтерек', icon:'🌳', color:'#00A651', cat:'nsj', status:'active',
+    desc:'Смешанное страхование жизни с участием в прибыли. Накопление + защита семьи.',
+    modules:[
+      {
+        id:11, name:'Знакомство с продуктом', icon:'🎯', color:'#00A651', order:1, desc:'Что такое Байтерек, участники договора и возрастные условия',
+        lessons:[
+          { id:111, type:'story', title:'Что такое Байтерек?', dur:3, xp:50, pts:40, order:1,
+            intro:'Байтерек — программа смешанного страхования жизни с участием в прибыли. Как символ Астаны олицетворяет стабильность, так и эта программа — надёжная финансовая основа семьи.',
+            text:'Байтерек — страховой продукт «Смешанное страхование жизни с участием в прибыли Компании». Код программы – «Е», серия продукта – НСЖУП, код продукта – 115.\n\nКлиент одновременно копит деньги И защищает семью. При дожитии — получает накопленную страховую сумму плюс бонусную страховую сумму. При уходе из жизни — семья получает страховую выплату.',
+            keyPoints:['Страховщик — АО «Халық-Life»','Страхователь — физическое лицо от 18 лет или юридическое лицо','Застрахованный — физическое лицо от 2 до 65 лет (не старше 70 лет к концу договора)','Территория действия — весь мир, 24 часа в сутки'] },
+          { id:112, type:'quiz', title:'Тест: основы Байтерек', dur:2, xp:80, pts:70, order:2, isQuiz:true,
+            questions:[
+              { text:'До какого возраста может быть застрахован клиент к окончанию договора?', options:['65 лет','70 лет','75 лет','80 лет'], correct:1, explanation:'Возраст застрахованного по окончании договора страхования не должен превышать 70 лет.' },
+              { text:'С какого минимального возраста можно застраховать ребёнка?', options:['С рождения','С 1 года','С 2 лет','С 5 лет'], correct:2, explanation:'Минимальный возраст застрахованного — 2 года. Это позволяет начать накопления с раннего детства.' },
+              { text:'Кто получает выплату при дожитии до конца срока?', options:['Застрахованный','Страхователь','Выгодоприобретатель','Наследники'], correct:1, explanation:'При дожитии выплата производится страхователю — тому, кто платил взносы.' }
+            ]
+          }
+        ]
+      },
+      {
+        id:12, name:'Взносы и условия', icon:'💰', color:'#3B82F6', order:2, desc:'Сроки, суммы, периодичность оплаты',
+        lessons:[
+          { id:121, type:'story', title:'Сроки и минимальные взносы', dur:5, xp:80, pts:60, order:1,
+            intro:'Байтерек — долгосрочная программа. Минимальный срок договора — от 5 лет и более.',
+            text:'Страховая премия уплачивается единовременно или в рассрочку. Страховые взносы оплачиваются безналичным платежом на банковский счёт Страховщика.\n\nРазмер тарифа определяется после андеррайтинга и зависит от возраста, пола, профессии, состояния здоровья и страховой суммы.',
+            keyPoints:['Единовременно — от 600 000 тенге','Ежегодно — от 120 000 тенге','Раз в полгода — от 60 000 тенге','Ежеквартально — от 30 000 тенге','Ежемесячно — от 10 000 тенге','Только безналичная оплата на счёт страховщика'] },
+          { id:122, type:'quiz', title:'Тест: условия договора', dur:3, xp:100, pts:80, order:2, isQuiz:true,
+            questions:[
+              { text:'Каков минимальный ежемесячный взнос по Байтерек?', options:['5 000 ₸','10 000 ₸','15 000 ₸','30 000 ₸'], correct:1, explanation:'Минимальный ежемесячный взнос — 10 000 тенге.' },
+              { text:'Клиент 55 лет хочет оформить Байтерек на 20 лет. Возможно ли это?', options:['Да','Нет — к концу договора будет 75 лет (>70)','Да при малой страховой сумме','Нет, максимальный срок 15 лет'], correct:1, explanation:'55 + 20 = 75 лет — превышает максимально допустимый возраст 70 лет на дату окончания.' }
+            ]
+          }
+        ]
+      },
+      {
+        id:13, name:'Страховое покрытие', icon:'🛡️', color:'#8B5CF6', order:3, desc:'Основное и дополнительные покрытия, дивиденды',
+        lessons:[
+          { id:131, type:'story', title:'Основное покрытие и дивиденды', dur:5, xp:80, pts:60, order:1,
+            intro:'Основное покрытие Байтерек защищает по двум базовым событиям: дожитие и смерть в период страховой защиты.',
+            text:'Размер страховой выплаты при дожитии и смерти = Страховая сумма + Бонусная страховая сумма (при наличии).\n\nСтраховые дивиденды начисляются с 3-го года страхования при условии полной оплаты взносов. Начисленные дивиденды увеличивают бонусную страховую сумму.\n\nДополнительные покрытия: а) смерть от несчастного случая; б) инвалидность от НС (только при заключении); в) телесные травмы; г) временная нетрудоспособность — максимум 40 дней (изменено с 60 по ВНД-ПС-38 изм.1); д) критические болезни (только при заключении, до 65 лет); е) освобождение от взносов (только при заключении).',
+            keyPoints:['Дивиденды начисляются с 3-го года страхования','Покрытия б, д, е — только при заключении договора','Временная нетрудоспособность: макс. 40 дней (ранее было 60)','Критические болезни действуют до 65 лет застрахованного'] },
+          { id:132, type:'quiz', title:'Тест: покрытие и выплаты', dur:3, xp:120, pts:100, order:2, isQuiz:true, isFinal:true,
+            questions:[
+              { text:'С какого года начисляются страховые дивиденды по Байтерек?', options:['С 1-го года','С 2-го года','С 3-го года','С 5-го года'], correct:2, explanation:'Дивиденды начисляются с 3-го года при условии полной оплаты взносов.' },
+              { text:'Сколько дней нетрудоспособности покрывает соответствующее покрытие (актуально с 03.09.2024)?', options:['30 дней','40 дней','60 дней','90 дней'], correct:1, explanation:'По ВНД-ПС-38 изм.1, вступившему в силу 03.09.2024, максимальный период сокращён до 40 дней.' },
+              { text:'Какое покрытие нельзя добавить после заключения договора?', options:['Смерть от НС','Телесные травмы','Критические болезни','Временная нетрудоспособность'], correct:2, explanation:'Покрытия инвалидность от НС, критические болезни и освобождение от взносов — только при заключении.' }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id:2, name:'Bilim-Life', icon:'📚', color:'#3B82F6', cat:'nsj', status:'active',
+    desc:'Государственная образовательная накопительная система (ГОНС). Накопление на образование детей с премией государства.',
+    modules:[
+      {
+        id:21, name:'Что такое ГОНС и Bilim-Life', icon:'🎓', color:'#3B82F6', order:1, desc:'Цель программы, законодательная база и ключевые участники',
+        lessons:[
+          { id:211, type:'story', title:'Государственная образовательная накопительная система', dur:5, xp:60, pts:50, order:1,
+            intro:'Bilim-Life — это накопительное страхование жизни в пользу детей с премией государства в рамках ГОНС (Государственной образовательной накопительной системы). Система работает с 2013 года.',
+            text:'Цель программы:\n1. Накопить средства на образование детей за счёт собственных вкладов, гарантированного дохода от компании, ежегодной премии государства и стартового образовательного капитала.\n2. Обеспечить страховую защиту на случай ухода из жизни застрахованного (родителя/опекуна) в период накопления.\n\nЗаконодательная основа: Закон РК «О внесении изменений и дополнений в некоторые законодательные акты РК по вопросам регулирования и развития страхового рынка» (вступил в силу 12.09.2022).',
+            keyPoints:['Накопительная система работает с 2013 года','Код программы — «А», серия ГОНС, код продукта — 601','Страхователь всегда является Застрахованным','Выгодоприобретатель — ребёнок (гражданин РК)','Один ребёнок может быть выгодоприобретателем только по одному договору','Нельзя одновременно иметь договор ГОНС и депозит AQYL на одного ребёнка'] },
+          { id:212, type:'story', title:'Участники и условия договора', dur:4, xp:60, pts:50, order:2,
+            intro:'Разберём, кто является страхователем, застрахованным и выгодоприобретателем по Bilim-Life, и какие возрастные требования действуют.',
+            text:'Страхователь (= Застрахованный): физическое лицо — родитель, опекун или законный представитель ребёнка. Возраст: от 18 до 65 лет. К окончанию договора — не более 70 лет.\n\nВыгодоприобретатель: ребёнок, гражданин РК. Должен быть единственным получателем выгоды по договору ГОНС. Не может одновременно иметь образовательный накопительный вклад в банке.\n\nСрок страхования: от 3 до 20 лет. Территория: весь мир, 24 часа.',
+            keyPoints:['Страхователь от 18 до 65 лет, к концу — не более 70','Срок страхования: от 3 до 20 лет','Весь мир, 24 часа','На одного ребёнка — только один договор','Замена застрахованного не допускается','Замена выгодоприобретателя возможна при присуждении образовательного гранта'] }
+        ]
+      },
+      {
+        id:22, name:'Страховые взносы и выплаты', icon:'💰', color:'#10B981', order:2, desc:'Минимальные взносы, периодичность, индексация по USD',
+        lessons:[
+          { id:221, type:'story', title:'Минимальные взносы и периодичность', dur:4, xp:70, pts:60, order:1,
+            intro:'Bilim-Life предлагает гибкую периодичность оплаты взносов. Существует также возможность оформить договор с индексацией по курсу доллара.',
+            text:'Минимальная страховая премия:\n• Ежемесячно — не менее 10 000 тенге\n• Ежеквартально — не менее 30 000 тенге\n• Раз в полгода — не менее 60 000 тенге\n• Ежегодно — не менее 120 000 тенге\n• Единовременно — не менее 360 000 тенге\n\nДля договора с индексацией по USD:\n• Единовременно — не менее 750 долларов США\n• Пополнения — не менее 100 долларов США (только через МПК — мобильное приложение)',
+            keyPoints:['Ежемесячный минимум — 10 000 тенге','Единовременно — от 360 000 тенге','При индексации USD — от 750$, пополнения от 100$','Пополнения по USD-договору — только через мобильное приложение (МПК)','Оплата только безналичным переводом на счёт страховщика'] },
+          { id:222, type:'story', title:'Страховые выплаты и условия', dur:5, xp:80, pts:70, order:2,
+            intro:'Страховые выплаты по Bilim-Life строго целевые — для оплаты образовательных услуг.',
+            text:'Страховой случай:\n1. Дожитие до конца срока страхования — выплата в организацию образования\n2. Смерть застрахованного — выплата по окончании срока договора в организацию образования (аналогично дожитию)\n3. Инвалидность I или II группы — освобождение от уплаты взносов на период инвалидности\n\nВыплата при дожитии осуществляется:\na) В казахстанский вуз — долями (за каждый семестр/год) или единовременно\nb) В зарубежный вуз — через эскроу-счёт\n\nПри присуждении образовательного гранта — 4 варианта распоряжения выплатой.',
+            keyPoints:['Выплаты идут в организацию образования, а не наличными','При инвалидности — освобождение от взносов','Зарубежный вуз — выплата через эскроу-счёт','При гранте: получить выплату, продлить, перевести 3-му лицу или на жильё','Страховая выплата = взносы + инвест.доход + премия государства + СОК (при наличии)'] },
+          { id:223, type:'quiz', title:'Тест: условия Bilim-Life', dur:3, xp:100, pts:80, order:3, isQuiz:true,
+            questions:[
+              { text:'Каков минимальный ежемесячный взнос по Bilim-Life?', options:['5 000 ₸','10 000 ₸','15 000 ₸','20 000 ₸'], correct:1, explanation:'Минимальный ежемесячный взнос — 10 000 тенге. При оплате раз в год — не менее 120 000 тенге.' },
+              { text:'Что происходит при установлении застрахованному (родителю) инвалидности I группы?', options:['Договор расторгается','Страхователь освобождается от уплаты взносов','Выплата производится сразу','Уменьшается страховая сумма'], correct:1, explanation:'При инвалидности I или II группы страхователь освобождается от дальнейшей уплаты взносов на период инвалидности, договор продолжается.' },
+              { text:'Куда производится выплата при поступлении ребёнка в зарубежный университет?', options:['Наличными ребёнку','На банковский счёт родителя','На эскроу-счёт ребёнка','В казахстанский банк'], correct:2, explanation:'При зарубежном университете страховщик открывает эскроу-счёт на имя выгодоприобретателя с ограничением на расходы только в целях оплаты образования.' }
+            ]
+          }
+        ]
+      },
+      {
+        id:23, name:'Премия государства и СОК', icon:'🏛️', color:'#F59E0B', order:3, desc:'Государственная премия, стартовый образовательный капитал, условия начисления и возврата',
+        lessons:[
+          { id:231, type:'story', title:'Премия государства', dur:5, xp:80, pts:70, order:1,
+            intro:'Ключевое преимущество Bilim-Life — ежегодная премия государства, которая значительно увеличивает накопления.',
+            text:'Премия государства начисляется ежегодно на расчётную сумму по договору по состоянию на 1 января. Срок начисления — не более 20 лет.\n\nРазмер премии:\n• 7% — для приоритетных категорий: дети-сироты, дети без попечения родителей, инвалиды, дети из многодетных и малообеспеченных семей\n• 5% — для всех остальных категорий\n\nМаксимум — 100 МРП в год.\n\nПремия прекращается:\n- по истечении 20 лет\n- при истечении срока договора\n- со дня смерти выгодоприобретателя или признания его недееспособным.\n\nПремия возвращается в бюджет при: расторжении договора по инициативе страхователя (кроме перевода в другую СО); если 3 года после отчисления ребёнок не поступил в другой вуз; потере гражданства РК.',
+            keyPoints:['5% для большинства категорий детей','7% для льготных категорий (сироты, многодетные, малоимущие)','Максимум 100 МРП в год, не более 20 лет','Начисляется на расчётную сумму на 1 января','Гарантированный доход от компании: до 8% в тенге, до 4,2% в USD'] },
+          { id:232, type:'story', title:'Стартовый образовательный капитал (СОК)', dur:4, xp:70, pts:60, order:2,
+            intro:'Стартовый образовательный капитал — дополнительная единовременная выплата из государственного бюджета детям, которым исполнилось 5 лет.',
+            text:'СОК начисляется ребёнку-выгодоприобретателю, которому в текущем году исполнилось 5 лет.\n\nРазмер:\n• 60 МРП — для большинства детей\n• 120 МРП — для детей-сирот и детей без попечения родителей\n\nМРП на 2026 год — 4 325 тенге. Таким образом 60 МРП = 259 500 тенге, 120 МРП = 519 000 тенге.\n\nУсловие сохранения СОК: страхователь обязан ежегодно вносить минимальный взнос:\n• Не менее 24 МРП — для большинства\n• Не менее 12 МРП — для детей с инвалидностью и из малоимущих семей\n• Освобождены — дети-сироты\n\nПериод зачисления СОК — 2 раза в год (до 31 августа и до 28 февраля).',
+            keyPoints:['60 МРП для большинства детей (≈259 500 ₸ на 2026)','120 МРП для сирот (≈519 000 ₸ на 2026)','Начисляется детям, которым исполняется 5 лет','Минимальный взнос 24 МРП/год для сохранения СОК','Дети-сироты освобождены от минимального взноса','При возврате СОК — начисленная премия государства остаётся'] },
+          { id:233, type:'quiz', title:'Итоговый тест: Bilim-Life', dur:5, xp:150, pts:120, order:3, isQuiz:true, isFinal:true,
+            questions:[
+              { text:'Какой размер СОК для большинства детей по программе Bilim-Life (МРП 2026 = 4 325)?', options:['48 750 ₸','103 800 ₸','259 500 ₸','519 000 ₸'], correct:2, explanation:'60 МРП × 4 325 тенге = 259 500 тенге. Для сирот — 120 МРП = 519 000 тенге.' },
+              { text:'Какой максимальный % премии государства для детей из многодетных семей?', options:['3%','5%','7%','10%'], correct:2, explanation:'7% — для приоритетных категорий: сироты, дети без попечения, инвалиды, дети из многодетных и малообеспеченных семей. 5% — для остальных.' },
+              { text:'В каком случае премия государства НЕ возвращается в бюджет при расторжении?', options:['При расторжении по желанию страхователя','При переводе выкупной суммы в другую страховую организацию','При смерти выгодоприобретателя','При потере гражданства'], correct:1, explanation:'При переводе выкупной суммы с учётом инвестдохода и премии государства в другую страховую организацию — премия государства не возвращается.' },
+              { text:'Что происходит с Bilim-Life при смерти застрахованного (родителя)?', options:['Договор расторгается','Выплата сразу ребёнку','Выплата по окончании срока в организацию образования','Выкупная сумма наследникам'], correct:2, explanation:'По смерти застрахованного выплата осуществляется по окончании срока страхования в организацию образования — аналогично дожитию.' }
+            ]
+          }
+        ]
+      },
+      {
+        id:24, name:'Сравнение с депозитом AQYL', icon:'⚖️', color:'#6366F1', order:4, desc:'Bilim-Life vs депозит AQYL: ключевые отличия',
+        lessons:[
+          { id:241, type:'story', title:'Bilim-Life vs AQYL — выбор аргумента', dur:4, xp:70, pts:60, order:1,
+            intro:'Клиенты часто спрашивают: «Чем это отличается от депозита AQYL?» Умение ответить на этот вопрос — ключевой навык консультанта.',
+            text:'Главное отличие Bilim-Life от депозита AQYL — страховая защита.\n\nПри смерти или инвалидности родителя:\n• Депозит AQYL: риск нехватки средств на обучение ребёнка\n• Bilim-Life: обучение оплачивается в полном объёме в пределах страховой суммы\n\nДругие отличия:\n• Периодичность: AQYL — любая; Bilim-Life — строго по графику\n• Гарантии: AQYL — КФГД до 10 млн тенге; Bilim-Life — ФГСВ, сумма НЕ ограничена\n• Доходность одинакова — до 8% в тенге\n• Налогообложение: оба не облагаются налогом',
+            keyPoints:['Главное преимущество Bilim-Life — страховая защита жизни родителя','Гарантия ФГСВ по Bilim-Life не ограничена по сумме (AQYL — до 10 млн)','Оба продукта: доходность до 8%, не облагаются налогом','Bilim-Life: взносы строго по графику; AQYL — произвольно','При расторжении обоих: премия государства возвращается в бюджет'] }
+        ]
+      }
+    ]
+  },
+  {
+    id:3, name:'Основы НСЖ', icon:'📋', color:'#8B5CF6', cat:'general', status:'active',
+    desc:'Общие понятия накопительного страхования жизни. Базовый курс для всех консультантов.',
+    modules:[
+      {
+        id:31, name:'Что такое НСЖ', icon:'❓', color:'#8B5CF6', order:1, desc:'Базовые понятия, виды и принципы накопительного страхования',
+        lessons:[
+          { id:311, type:'story', title:'Накопительное страхование жизни — что это?', dur:5, xp:60, pts:50, order:1,
+            intro:'НСЖ — это финансовый инструмент, объединяющий накопление и страховую защиту. Понимание базовых принципов необходимо каждому консультанту.',
+            text:'Накопительное страхование жизни (НСЖ) — вид страхования, при котором страховые взносы клиента накапливаются, а страховщик обязуется выплатить накопленную сумму при наступлении страхового случая или по истечении срока договора.\n\nВ отличие от обычного банковского депозита:\n• Страховая компания несёт ответственность за инвестирование средств\n• Включена страховая защита жизни и здоровья\n• Выплаты гарантированы законодательством РК\n\nВиды страховых случаев в НСЖ:\n1. Дожитие до конца срока — основной сценарий\n2. Смерть в период действия договора — защита семьи\n3. Инвалидность — освобождение от взносов или выплата\n\nВажные термины:\n• Страховая сумма — максимальная ответственность страховщика\n• Страховая премия — сумма, которую платит клиент\n• Выкупная сумма — сумма при досрочном расторжении',
+            keyPoints:['НСЖ = накопление + страховая защита','Выкупная сумма формируется с 1-го года страхования','Страховщик несёт ответственность за инвестирование средств','Гарантии ФГСВ (Фонд Гарантирования Страховых Выплат)','Страховая выплата и доход не облагаются ИПН'] },
+          { id:312, type:'story', title:'Продукты НСЖ в Halyk Life', dur:3, xp:50, pts:40, order:2,
+            intro:'Halyk Life предлагает несколько продуктов накопительного страхования жизни, каждый из которых решает конкретные задачи клиента.',
+            text:'Линейка НСЖ Halyk Life:\n\n1. Байтерек (НСЖУП 115) — смешанное страхование жизни с участием в прибыли\nДля: накопление + защита семьи\nОсобенность: участие в прибыли компании через страховые дивиденды\n\n2. Bilim-Life (ГОНС 601) — образовательное накопительное страхование\nДля: накопление на образование ребёнка\nОсобенность: премия государства + стартовый образовательный капитал\n\n3. Bolashak — (информация в разработке)\n4. Life-Renta — (информация в разработке)',
+            keyPoints:['Байтерек — для семейного накопления и защиты','Bilim-Life — для накопления на образование детей с поддержкой государства','Все продукты НСЖ: выплаты не облагаются налогом','Гарантия Фонда гарантирования страховых выплат'] }
+        ]
+      }
+    ]
+  },
+  {
+    id:4, name:'Техника продаж', icon:'🎯', color:'#EC4899', cat:'sales', status:'wip',
+    desc:'Скрипты, работа с возражениями, клиентские профили и симулятор переговоров.',
+    modules:[]
+  },
+  {
+    id:5, name:'Bolashak', icon:'🌟', color:'#F59E0B', cat:'nsj', status:'wip',
+    desc:'Накопительная программа страхования жизни для долгосрочного финансового планирования.',
+    modules:[]
+  },
+  {
+    id:6, name:'Life-Renta', icon:'💎', color:'#14B8A6', cat:'nsj', status:'wip',
+    desc:'Аннуитетное страхование — гарантированные выплаты после выхода на пенсию.',
+    modules:[]
+  }
+];
+
+// ── PROGRESS ───────────────────────────────────────
+let DB_PROGRESS = {}; // { userId: { lessonId: { done, date, score } } }
+
+// ── RESULTS ────────────────────────────────────────
+let DB_RESULTS = [
+  { id:1, userId:2, courseId:1, lessonId:112, score:100, passed:true, date:'2025-06-15' },
+  { id:2, userId:2, courseId:1, lessonId:122, score:85,  passed:true, date:'2025-06-16' },
+  { id:3, userId:3, courseId:1, lessonId:112, score:67,  passed:false, date:'2025-06-14' },
+];
+
+// ── ASSIGNMENTS ────────────────────────────────────
+let DB_ASSIGNMENTS = [
+  { id:1, target:'all', targetLabel:'Все консультанты', courseId:1, courseName:'Байтерек', deadline:'2025-07-31', priority:'mandatory', createdAt:'2025-06-01' },
+  { id:2, target:'dept', targetLabel:'Алматы — Офис 1', courseId:2, courseName:'Bilim-Life', deadline:'2025-08-15', priority:'recommended', createdAt:'2025-06-10' },
+  { id:3, target:'all', targetLabel:'Все консультанты', courseId:3, courseName:'Основы НСЖ', deadline:'2025-07-01', priority:'mandatory', createdAt:'2025-06-01' },
+];
+
+// ── NEXT IDs ───────────────────────────────────────
+let DB_IDS = { user:7, course:7, module:100, lesson:1000, result:4, assign:4 };
+
+// ── NOTIFICATIONS ──────────────────────────────────
+let DB_NOTIFS = [
+  { icon:'⚠️', text:'Марат Дюсенов заблокирован', time:'Сегодня' },
+  { icon:'⏰', text:'2 консультанта: дедлайн через 7 дней', time:'Сегодня' },
+  { icon:'🎓', text:'Айгерим Жакупова сдала тест 100%', time:'2 ч. назад' },
+];
+
+// ── PERSISTENCE ────────────────────────────────────
+function dbSave() {
+  try {
+    localStorage.setItem('hlms_users', JSON.stringify(DB_USERS));
+    localStorage.setItem('hlms_courses', JSON.stringify(DB_COURSES));
+    localStorage.setItem('hlms_progress', JSON.stringify(DB_PROGRESS));
+    localStorage.setItem('hlms_results', JSON.stringify(DB_RESULTS));
+    localStorage.setItem('hlms_assigns', JSON.stringify(DB_ASSIGNMENTS));
+    localStorage.setItem('hlms_ids', JSON.stringify(DB_IDS));
+  } catch(e) { console.warn('Save failed', e); }
+}
+
+function dbLoad() {
+  try {
+    const u = localStorage.getItem('hlms_users');     if(u) DB_USERS       = JSON.parse(u);
+    const c = localStorage.getItem('hlms_courses');   if(c) DB_COURSES     = JSON.parse(c);
+    const p = localStorage.getItem('hlms_progress');  if(p) DB_PROGRESS    = JSON.parse(p);
+    const r = localStorage.getItem('hlms_results');   if(r) DB_RESULTS     = JSON.parse(r);
+    const a = localStorage.getItem('hlms_assigns');   if(a) DB_ASSIGNMENTS = JSON.parse(a);
+    const i = localStorage.getItem('hlms_ids');       if(i) DB_IDS         = JSON.parse(i);
+  } catch(e) { console.warn('Load failed', e); }
+}
+
+// ── HELPERS ────────────────────────────────────────
+function getUser(id)   { return DB_USERS.find(u => u.id === id); }
+function getCourse(id) { return DB_COURSES.find(c => c.id === id); }
+function getModule(cid, mid)  { const c = getCourse(cid); return c?.modules?.find(m => m.id === mid); }
+function getLesson(cid, mid, lid) { const m = getModule(cid, mid); return m?.lessons?.find(l => l.id === lid); }
+
+function getUserProgress(userId) { return DB_PROGRESS[userId] || {}; }
+function markLessonDone(userId, lessonId, score) {
+  if (!DB_PROGRESS[userId]) DB_PROGRESS[userId] = {};
+  DB_PROGRESS[userId][lessonId] = { done:true, date:new Date().toISOString().slice(0,10), score: score||100 };
+  dbSave();
+}
+function isLessonDone(userId, lessonId) { return !!DB_PROGRESS[userId]?.[lessonId]?.done; }
+
+function getCourseDone(userId, courseId) {
+  const c = getCourse(courseId); if (!c) return [0,0];
+  const all = c.modules?.flatMap(m => m.lessons || []) || [];
+  const done = all.filter(l => isLessonDone(userId, l.id)).length;
+  return [done, all.length];
+}
+
+function hasAccess(user, courseId) {
+  if (!user || user.role === 'admin') return true;
+  if (user.status === 'blocked') return false;
+  if (user.courses === 'all') return true;
+  if (!Array.isArray(user.courses)) return false;
+  return user.courses.includes(courseId);
+}
+
+function todayStr() { return new Date().toISOString().slice(0,10); }
+
+dbLoad();
+
+</script>
+<script>
+// ═══════════════════════════════════════════════════
+// HALYK LIFE EDUCATION — app.js
+// ═══════════════════════════════════════════════════
+
+let CU = null; // current user
+
+// ══ AUTH ═══════════════════════════════════════════
+document.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogin() {
+  const login = document.getElementById('l-login').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  const err   = document.getElementById('login-err');
+  const user  = DB_USERS.find(u => u.login===login && u.pass===pass);
+  if (!user) { err.style.display='block'; return; }
+  if (user.status === 'blocked') { err.style.display='block'; err.textContent='Ваш аккаунт заблокирован. Обратитесь к администратору.'; return; }
+  err.style.display='none';
+  CU = user;
+  if (user.role==='admin') { showScreen('screen-admin'); initAdmin(); }
+  else                     { showScreen('screen-user');  initUser(); }
+}
+
+function doLogout() {
+  CU = null;
+  document.getElementById('l-pass').value='';
+  document.getElementById('login-err').style.display='none';
+  document.getElementById('login-err').textContent='Неверный логин или пароль';
+  showScreen('screen-login');
+}
+
+function togglePw() {
+  const i = document.getElementById('l-pass');
+  i.type = i.type==='password' ? 'text' : 'password';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══ USER INIT ══════════════════════════════════════
+function initUser() {
+  const ini = (CU.firstName[0]||'')+(CU.lastName?.[0]||'');
+  document.getElementById('u-avatar').textContent  = ini||CU.avatar||'К';
+  document.getElementById('u-name').textContent    = CU.firstName;
+  document.getElementById('side-av').textContent   = ini||CU.avatar||'К';
+  document.getElementById('side-uname').textContent = `${CU.firstName} ${CU.lastName}`.trim();
+  updateTopStats();
+  renderSideNav();
+  uPage('home');
+}
+
+function updateTopStats() {
+  const prog = getUserProgress(CU.id);
+  const xp   = Object.values(prog).reduce((s,p)=>s+(p.xp||0), 0);
+  // XP per lesson
+  let totalXp=0;
+  DB_COURSES.forEach(c=>{
+    (c.modules||[]).forEach(m=>{
+      (m.lessons||[]).forEach(l=>{
+        if(isLessonDone(CU.id,l.id)) totalXp+=l.xp||0;
+      });
+    });
+  });
+  document.getElementById('u-xp').textContent = totalXp;
+  document.getElementById('u-streak').textContent = getStreak();
+}
+
+function getStreak() {
+  const key = 'streak_'+CU.id;
+  let data = JSON.parse(localStorage.getItem(key)||'{"count":0,"last":null}');
+  const today = todayStr();
+  if (data.last===today) return data.count;
+  const yest = new Date(); yest.setDate(yest.getDate()-1);
+  const yStr = yest.toISOString().slice(0,10);
+  data.count = data.last===yStr ? data.count+1 : 1;
+  data.last = today;
+  localStorage.setItem(key, JSON.stringify(data));
+  return data.count;
+}
+
+function renderSideNav() {
+  const nsjCourses    = DB_COURSES.filter(c=>c.cat==='nsj'||c.cat==='general');
+  const nonsjCourses  = DB_COURSES.filter(c=>c.cat==='nonsj');
+
+  document.getElementById('side-nsj').innerHTML = nsjCourses.map(c=>{
+    const [done,total] = getCourseDone(CU.id, c.id);
+    const pct = total ? Math.round(done/total*100) : 0;
+    const accessible = hasAccess(CU,c.id);
+    const icon = c.status==='wip'?'🔒':pct===100?'✅':done>0?'▶️':'○';
+    return `<button class="sn-item" onclick="${c.status==='wip'?'toast(\"Курс в разработке\")':`uOpenCourse(${c.id})`}" style="${!accessible?'opacity:.4':''}" title="${!accessible?'Нет доступа':''}">
+      <span>${icon}</span><span style="flex:1;text-align:left;font-size:.8rem">${c.name}</span>
+      ${pct>0&&pct<100?`<span style="font-size:.7rem;color:var(--muted)">${pct}%</span>`:''}
+    </button>`;
+  }).join('');
+
+  document.getElementById('side-nonsj').innerHTML = nonsjCourses.map(c=>`
+    <button class="sn-item" style="opacity:.5;cursor:default"><span>🔒</span><span style="flex:1;text-align:left;font-size:.8rem">${c.name}</span></button>
+  `).join('') || `<div style="font-size:.76rem;color:var(--muted);padding:5px 12px">Скоро появятся</div>`;
+}
+
+// ══ USER PAGES ═════════════════════════════════════
+function uPage(name) {
+  document.querySelectorAll('#screen-user .page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#screen-user .sn-item[data-p]').forEach(n=>n.classList.remove('active'));
+  const pg = document.getElementById('upage-'+name);
+  if (pg) { pg.classList.add('active'); buildPage(name, pg); }
+  const nav = document.querySelector(`#screen-user .sn-item[data-p="${name}"]`);
+  if (nav) nav.classList.add('active');
+  document.getElementById('user-side').classList.remove('open');
+  closeDropdowns();
+}
+
+function buildPage(name, el) {
+  if (name==='home')       el.innerHTML = buildHome();
+  if (name==='my-courses') el.innerHTML = buildMyCourses();
+  if (name==='progress')   el.innerHTML = buildProgress();
+  if (name==='certs')      el.innerHTML = buildCerts();
+  if (name==='leaderboard') el.innerHTML = buildLeaderboard();
+}
+
+function buildHome() {
+  const [totDone,totAll] = (() => {
+    let d=0,a=0;
+    DB_COURSES.filter(c=>hasAccess(CU,c.id)).forEach(c=>{const[cd,ca]=getCourseDone(CU.id,c.id);d+=cd;a+=ca;});
+    return [d,a];
+  })();
+  const pct = totAll ? Math.round(totDone/totAll*100) : 0;
+  let totalXp=0;
+  DB_COURSES.forEach(c=>(c.modules||[]).forEach(m=>(m.lessons||[]).forEach(l=>{if(isLessonDone(CU.id,l.id))totalXp+=l.xp||0;})));
+
+  const nsjCat  = DB_COURSES.filter(c=>c.cat==='nsj'||c.cat==='general');
+  const salCat  = DB_COURSES.filter(c=>c.cat==='sales');
+  const nonsjCat= DB_COURSES.filter(c=>c.cat==='nonsj');
+
+  const cards = (list) => list.map(c=>{
+    const [done,total] = getCourseDone(CU.id,c.id);
+    const p = total ? Math.round(done/total*100) : 0;
+    const acc = hasAccess(CU,c.id);
+    const isWip = c.status==='wip';
+    return `<div class="course-card ${isWip?'wip':''}" style="--cc:${c.color}" onclick="${isWip?`toast('Курс &quot;${c.name}&quot; находится в разработке',true)`:`uOpenCourse(${c.id})`}${!acc?`;event.stopPropagation();toast('Нет доступа к курсу. Обратитесь к администратору.','error')`:''}" >
+      <div class="cc-icon">${c.icon}</div>
+      <div class="cc-badge" style="background:${c.color}22;color:${c.color}">${catLabel(c.cat)}</div>
+      <div class="cc-name">${c.name}</div>
+      <div class="cc-desc">${c.desc}</div>
+      <div class="cc-meta"><span>📚 ${(c.modules||[]).length} модулей</span><span>⏱️ ~${totalMin(c)} мин</span></div>
+      ${total>0?`<div class="prog-bar"><div class="prog-fill" style="width:${p}%;background:${c.color}"></div></div><div class="prog-label">${done}/${total} уроков · ${p}%</div>`:''}
+      ${isWip?'<div class="wip-overlay">🔨 В разработке</div>':''}
+      ${!acc&&!isWip?`<div class="wip-overlay">🔒 Нет доступа</div>`:''}
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="hero-banner">
+      <div class="hb-ey">Платформа дистанционного обучения</div>
+      <div class="hb-title">Halyk Life Education</div>
+      <div class="hb-sub">Страховые продукты · Техника продаж · Нормативные документы</div>
+      <div class="hb-stats">
+        <div><div class="hbs-val">${totDone}</div><div class="hbs-lab">Уроков пройдено</div></div>
+        <div><div class="hbs-val">${pct}%</div><div class="hbs-lab">Общий прогресс</div></div>
+        <div><div class="hbs-val">${totalXp}</div><div class="hbs-lab">XP заработано</div></div>
+        <div><div class="hbs-val">${getStreak()}</div><div class="hbs-lab">Дней серии</div></div>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card green"><div class="stat-icon">📖</div><div class="stat-val">${DB_COURSES.filter(c=>c.status==='active').length}</div><div class="stat-lab">Активных курсов</div></div>
+      <div class="stat-card"><div class="stat-icon">🔨</div><div class="stat-val">${DB_COURSES.filter(c=>c.status==='wip').length}</div><div class="stat-lab">В разработке</div></div>
+      <div class="stat-card"><div class="stat-icon">🎓</div><div class="stat-val">${DB_RESULTS.filter(r=>r.userId===CU.id&&r.passed).length}</div><div class="stat-lab">Тестов сдано</div></div>
+      <div class="stat-card"><div class="stat-icon">🏅</div><div class="stat-val">${DB_RESULTS.filter(r=>r.userId===CU.id&&r.passed&&r.score>=70).length}</div><div class="stat-lab">Сертификатов</div></div>
+    </div>
+    <div class="cat-section">
+      <div class="cat-header"><div class="cat-title">📚 Накопительное страхование жизни (НСЖ)</div><span class="cat-badge">Приоритетное направление</span></div>
+      <div class="courses-grid">${cards(nsjCat)}</div>
+    </div>
+    ${salCat.length?`<div class="cat-section">
+      <div class="cat-header"><div class="cat-title">🎯 Техника продаж</div><span class="cat-badge tag-sales">Профессиональное развитие</span></div>
+      <div class="courses-grid">${cards(salCat)}</div>
+    </div>`:''}
+    <div class="cat-section">
+      <div class="cat-header"><div class="cat-title">🔒 Ненакопительное страхование</div><span class="cat-badge tag-wip">Скоро</span></div>
+      <div style="background:var(--mist);border:1px dashed var(--border);border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)">
+        <div style="font-size:1.5rem;margin-bottom:8px">🔨</div>
+        <div style="font-weight:600;margin-bottom:4px">Раздел находится в разработке</div>
+        <div style="font-size:.82rem">Курсы по ненакопительному страхованию появятся в ближайшее время</div>
+      </div>
+    </div>`;
+}
+
+function catLabel(cat) {
+  return { nsj:'НСЖ', nonsj:'Ненакопительное', general:'Общее', sales:'Продажи' }[cat]||cat;
+}
+function totalMin(c) {
+  return (c.modules||[]).reduce((s,m)=>(m.lessons||[]).reduce((ss,l)=>ss+(l.dur||0),s),0);
+}
+
+function buildMyCourses() {
+  const started = DB_COURSES.filter(c=>{const[d]=getCourseDone(CU.id,c.id);return d>0;});
+  if (!started.length) return `<div class="view-header"><h2>Мои курсы</h2></div><div class="empty"><span>📖</span>Вы ещё не начали ни одного курса. Перейдите на главную!</div>`;
+  return `<div class="view-header"><h2>Мои курсы</h2><p>Курсы в процессе изучения</p></div>
+    <div class="courses-grid">${started.map(c=>{
+      const [done,total]=getCourseDone(CU.id,c.id);
+      const p=total?Math.round(done/total*100):0;
+      return `<div class="course-card" style="--cc:${c.color}" onclick="uOpenCourse(${c.id})">
+        <div class="cc-icon">${c.icon}</div>
+        <div class="cc-name">${c.name}</div>
+        <div class="cc-meta"><span>${done}/${total} уроков</span><span>${p}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${p}%;background:${c.color}"></div></div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+function buildProgress() {
+  let totalDone=0,totalAll=0,totalXp=0;
+  DB_COURSES.forEach(c=>{const[d,a]=getCourseDone(CU.id,c.id);totalDone+=d;totalAll+=a;});
+  DB_COURSES.forEach(c=>(c.modules||[]).forEach(m=>(m.lessons||[]).forEach(l=>{if(isLessonDone(CU.id,l.id))totalXp+=l.xp||0;})));
+  const pct=totalAll?Math.round(totalDone/totalAll*100):0;
+  const attempts=DB_RESULTS.filter(r=>r.userId===CU.id).length;
+  const passed=DB_RESULTS.filter(r=>r.userId===CU.id&&r.passed).length;
+
+  return `<div class="view-header"><h2>Мой прогресс</h2></div>
+    <div class="stats-grid">
+      <div class="stat-card green"><div class="stat-icon">⭐</div><div class="stat-val">${totalXp}</div><div class="stat-lab">XP заработано</div></div>
+      <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val">${pct}%</div><div class="stat-lab">Общий прогресс</div></div>
+      <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-val">${totalDone}/${totalAll}</div><div class="stat-lab">Уроков пройдено</div></div>
+      <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val">${passed}/${attempts}</div><div class="stat-lab">Тестов сдано</div></div>
+    </div>
+    <div class="section-title">По курсам</div>
+    ${DB_COURSES.filter(c=>c.status!=='wip').map(c=>{
+      const [d,a]=getCourseDone(CU.id,c.id);
+      const p=a?Math.round(d/a*100):0;
+      const best=DB_RESULTS.filter(r=>r.userId===CU.id&&r.courseId===c.id&&r.passed).sort((a,b)=>b.score-a.score)[0];
+      return `<div class="prog-course-row">
+        <div class="pcr-head"><span class="pcr-name">${c.icon} ${c.name}</span><span class="pcr-pct">${p}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${p}%;background:${c.color}"></div></div>
+        <div class="pcr-meta">
+          <span>📚 ${d}/${a} уроков</span>
+          <span>🎯 Тестов: ${best?best.score+'%':'—'}</span>
+          ${best?'<span style="color:var(--g)">✅ Сертификат</span>':''}
+        </div>
+      </div>`;
+    }).join('')}
+    ${DB_RESULTS.filter(r=>r.userId===CU.id).length?`
+    <div class="section-title" style="margin-top:24px">История тестов</div>
+    <div class="table-wrap"><table class="adm-table">
+      <thead><tr><th>Курс</th><th>Дата</th><th>Результат</th><th>Статус</th></tr></thead>
+      <tbody>${DB_RESULTS.filter(r=>r.userId===CU.id).sort((a,b)=>b.id-a.id).map(r=>{
+        const c=getCourse(r.courseId);
+        return `<tr><td>${c?.icon} ${c?.name}</td><td>${r.date}</td><td><strong>${r.score}%</strong></td>
+          <td><span class="status-badge ${r.passed?'sb-active':'sb-blocked'}">${r.passed?'✅ Пройден':'❌ Не пройден'}</span></td></tr>`;
+      }).join('')}</tbody>
+    </table></div>`:''}`;
+}
+
+function buildCerts() {
+  const certs = DB_COURSES.map(c=>{
+    const best=DB_RESULTS.filter(r=>r.userId===CU.id&&r.courseId===c.id&&r.passed).sort((a,b)=>b.score-a.score)[0];
+    return best?{course:c,result:best}:null;
+  }).filter(Boolean);
+
+  if (!certs.length) return `<div class="view-header"><h2>Сертификаты</h2></div><div class="empty"><span>🏅</span>Сертификатов пока нет.<br>Сдайте тест на 70% и выше!</div>`;
+  return `<div class="view-header"><h2>Сертификаты</h2><p>Выдаются за прохождение тестов с результатом ≥ 70%</p></div>
+    <div class="certs-grid">${certs.map(({course:c,result:r})=>`
+      <div class="cert-card">
+        <div class="cert-badge">${catLabel(c.cat)}</div>
+        <div class="cert-name">${c.icon} ${c.name}</div>
+        <div class="cert-score">${r.score}%</div>
+        <div class="cert-date">Выдан: ${r.date}</div>
+        <div style="margin-top:10px"><span style="font-size:.74rem;font-weight:700;background:var(--gl);color:var(--gd);padding:3px 9px;border-radius:20px">✅ Сертификат выдан</span></div>
+      </div>`).join('')}</div>`;
+}
+
+function buildLeaderboard() {
+  const users = DB_USERS.filter(u=>u.role==='user');
+  const rows = users.map(u=>{
+    let xp=0;
+    DB_COURSES.forEach(c=>(c.modules||[]).forEach(m=>(m.lessons||[]).forEach(l=>{if(isLessonDone(u.id,l.id))xp+=l.xp||0;})));
+    const ini=(u.firstName[0]||'')+(u.lastName?.[0]||'');
+    return {user:u,xp,ini};
+  }).sort((a,b)=>b.xp-a.xp).map((r,i)=>({...r,rank:i+1}));
+
+  const medals=['🥇','🥈','🥉'];
+  return `<div class="view-header"><h2>🏆 Рейтинг знатоков</h2><p>По заработанному XP</p></div>
+    ${rows.map(r=>`<div class="lb-row ${r.user.id===CU.id?'me':''}">
+      <div class="lb-rank">${r.rank<=3?medals[r.rank-1]:r.rank}</div>
+      <div class="lb-av">${r.ini}</div>
+      <div class="lb-info"><div class="lb-name">${r.user.firstName} ${r.user.lastName} ${r.user.id===CU.id?'<span style="font-size:.7rem;background:var(--g);color:#fff;padding:1px 6px;border-radius:10px">Вы</span>':''}</div><div class="lb-dept">${r.user.dept}</div></div>
+      <div class="lb-pts">${r.xp} XP</div>
+    </div>`).join('')}`;
+}
+
+// ══ OPEN COURSE ════════════════════════════════════
+function uOpenCourse(courseId) {
+  const c = getCourse(courseId);
+  if (!c || c.status==='wip') return;
+  if (!hasAccess(CU,courseId)) { toast('У вас нет доступа к этому курсу','error'); return; }
+
+  // Build course detail view
+  const pg = document.getElementById('upage-home');
+  const [done,total] = getCourseDone(CU.id,courseId);
+  const pct = total ? Math.round(done/total*100) : 0;
+
+  pg.innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="uPage('home')" style="margin-bottom:16px">← Все курсы</button>
+    <div class="hero-banner" style="background:linear-gradient(135deg,${c.color}CC,${c.color}99)">
+      <div class="hb-ey">${catLabel(c.cat)}</div>
+      <div class="hb-title">${c.icon} ${c.name}</div>
+      <div class="hb-sub">${c.desc}</div>
+      <div class="hb-stats">
+        <div><div class="hbs-val">${done}/${total}</div><div class="hbs-lab">Уроков</div></div>
+        <div><div class="hbs-val">${pct}%</div><div class="hbs-lab">Прогресс</div></div>
+        <div><div class="hbs-val">${(c.modules||[]).length}</div><div class="hbs-lab">Модулей</div></div>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:20px">Программа курса</div>
+    ${(c.modules||[]).sort((a,b)=>a.order-b.order).map(m=>{
+      const mDone = (m.lessons||[]).filter(l=>isLessonDone(CU.id,l.id)).length;
+      const mTotal = m.lessons?.length||0;
+      const mPct = mTotal ? Math.round(mDone/mTotal*100) : 0;
+      return `<div class="module-row" onclick="toggleModuleLessons(this,${c.id},${m.id})">
+        <div class="mr-icon" style="background:${m.color}22">${m.icon}</div>
+        <div class="mr-info">
+          <div class="mr-name">${m.name}</div>
+          <div class="mr-desc">${m.desc}</div>
+          <div class="mr-meta"><span>📚 ${mTotal} уроков</span><span>⭐ ${(m.lessons||[]).reduce((s,l)=>s+(l.xp||0),0)} XP</span></div>
+        </div>
+        <div class="mr-right"><div class="mr-pct">${mPct}%</div></div>
+      </div>
+      <div id="mod-lessons-${m.id}" style="display:none;margin-bottom:10px;padding-left:16px;border-left:3px solid ${m.color}22">
+        ${(m.lessons||[]).sort((a,b)=>a.order-b.order).map(l=>{
+          const done2 = isLessonDone(CU.id,l.id);
+          return `<div class="lesson-row ${done2?'done':''}" onclick="event.stopPropagation();startLesson(${c.id},${m.id},${l.id})">
+            <div class="lr-num">${done2?'✓':l.order}</div>
+            <div class="lr-name">${l.title}</div>
+            <span style="font-size:.72rem;color:var(--muted)">${typeLabel(l.type)} · ${l.dur}мин · ⭐${l.xp}</span>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }).join('')}`;
+  pg.classList.add('active');
+  document.querySelectorAll('#screen-user .page').forEach(p=>{ if(p!==pg)p.classList.remove('active'); });
+}
+
+function toggleModuleLessons(el, cid, mid) {
+  const panel = document.getElementById('mod-lessons-'+mid);
+  panel.style.display = panel.style.display==='none' ? 'block' : 'none';
+}
+
+function typeLabel(t) {
+  return {story:'📖',quiz:'📝',case:'💼',simulator:'🎭'}[t]||'📖';
+}
+
+// ══ LESSON ENGINE ══════════════════════════════════
+let LS = { cid:0, mid:0, lid:0, lesson:null, module:null, course:null, steps:[], step:0, answers:{}, done:false };
+
+function startLesson(cid, mid, lid) {
+  const course  = getCourse(cid);
+  const module  = getModule(cid, mid);
+  const lesson  = getLesson(cid, mid, lid);
+  if (!lesson) return;
+
+  LS = { cid, mid, lid, lesson, module, course, steps:[], step:0, answers:{}, done:false };
+
+  if (lesson.isQuiz || lesson.type==='quiz') {
+    LS.steps = (lesson.questions||[]).map((q,i)=>({type:'question',q,idx:i}));
+    LS.steps.push({type:'quiz-result'});
+  } else {
+    LS.steps = [{type:'intro'}, {type:'main'}];
+  }
+
+  document.getElementById('lbar-xp').textContent = `⭐ ${lesson.xp||0} XP`;
+  renderLessonStep();
+  const shell = document.getElementById('lesson-shell');
+  shell.style.display = 'flex';
+}
+
+function closeLesson() {
+  document.getElementById('lesson-shell').style.display = 'none';
+  updateTopStats();
+  renderSideNav();
+  uOpenCourse(LS.cid);
+}
+
+function lsPrev() { if(LS.step>0){LS.step--;renderLessonStep();} }
+function lsNext() {
+  const step = LS.steps[LS.step];
+  if (step?.type==='question' && LS.answers[LS.step]===undefined) { toast('Выберите ответ'); return; }
+  if (LS.step < LS.steps.length-1) { LS.step++; renderLessonStep(); }
+  else { completeLesson(); }
+}
+
+function renderLessonStep() {
+  const step  = LS.steps[LS.step];
+  const total = LS.steps.length;
+  const pct   = Math.round(LS.step/(total-1||1)*100);
+  document.getElementById('lbar-fill').style.width  = pct+'%';
+  document.getElementById('lbar-label').textContent = `${LS.step+1}/${total}`;
+  document.getElementById('ls-prev').disabled = LS.step===0;
+  const nextBtn = document.getElementById('ls-next');
+  nextBtn.textContent = LS.step===total-1 ? '✓ Завершить' : 'Продолжить →';
+
+  const body = document.getElementById('lesson-body');
+  body.scrollTop = 0;
+  const l = LS.lesson; const m = LS.module; const c = LS.course;
+
+  if (!step) return;
+
+  if (step.type==='intro') {
+    body.innerHTML = `<div class="lesson-title-wrap">
+      <div class="lesson-eyebrow">${m.icon} ${m.name}</div>
+      <div class="lesson-title">${l.title}</div>
+      <div class="lesson-meta-row"><span>⏱️ ~${l.dur}мин</span><span>⭐ ${l.xp}XP</span><span>${typeLabel(l.type)}</span></div>
+    </div>
+    <div class="lesson-intro">${l.intro||''}</div>`;
+  }
+  else if (step.type==='main') {
+    let html = '';
+    if (l.text) html += `<div class="block-vnd"><div class="vnd-label">📄 Учебный материал</div><div class="vnd-text">${l.text.replace(/\n/g,'<br/>')}</div></div>`;
+    if (l.keyPoints?.length) html += `<div class="block block-kp"><div class="kp-title">✅ Ключевые тезисы</div>${l.keyPoints.map(k=>`<div class="kp-item">${k}</div>`).join('')}</div>`;
+    body.innerHTML = html || '<div class="empty">Нет материала</div>';
+  }
+  else if (step.type==='question') {
+    const q = step.q; const answered = LS.answers[LS.step];
+    body.innerHTML = `<div class="quiz-wrap">
+      <div class="q-progress">
+        <span class="q-num">Вопрос ${step.idx+1}/${LS.lesson.questions.length}</span>
+        <div class="prog-bar" style="flex:1;margin:0"><div class="prog-fill" style="width:${Math.round((step.idx+1)/LS.lesson.questions.length*100)}%;background:var(--g)"></div></div>
+      </div>
+      <div class="q-card">
+        <div class="q-text">${q.text}</div>
+        <div class="opts">${q.options.map((opt,i)=>{
+          let cls='';
+          if(answered!==undefined){if(i===q.correct)cls='correct';else if(i===answered)cls='wrong';}
+          else if(answered===i)cls='selected';
+          return `<div class="opt ${answered===i&&answered!==undefined?'selected':''} ${cls}" onclick="pickAnswer(${LS.step},${i})">
+            <div class="opt-dot"></div><div class="opt-text">${opt}</div>
+          </div>`;
+        }).join('')}</div>
+        <div class="q-explain ${answered!==undefined?'show':''}">${answered!==undefined?`💡 ${q.explanation}`:''}</div>
+      </div></div>`;
+  }
+  else if (step.type==='quiz-result') {
+    nextBtn.textContent='✓ Завершить';
+    const qs = LS.lesson.questions||[];
+    const correct = qs.filter((q,i)=>LS.answers[i]===q.correct).length;
+    const score = Math.round(correct/qs.length*100);
+    const passed = score>=70;
+    body.innerHTML = `<div class="completion">
+      <div class="compl-icon">${passed?'🏆':'📖'}</div>
+      <div class="compl-title">${score}%</div>
+      <div class="compl-sub">${passed?'✅ Тест пройден!':'❌ Нужно повторить материал (мин. 70%)'}</div>
+      <div class="compl-pts">⭐ +${passed?LS.lesson.xp:Math.round(LS.lesson.xp*score/100)} XP</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;text-align:left;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:.85rem"><span>Правильных ответов</span><strong>${correct}/${qs.length}</strong></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:.85rem"><span>Результат</span><strong style="color:${passed?'var(--g)':'var(--red)'}">${score}%${passed?' ✅':' ❌'}</strong></div>
+      </div>
+    </div>`;
+    // Save result
+    if (!LS.done) {
+      const r = {id:DB_IDS.result++,userId:CU.id,courseId:LS.cid,lessonId:LS.lid,score,passed,date:todayStr()};
+      DB_RESULTS.push(r);
+      markLessonDone(CU.id, LS.lid, score);
+      LS.done=true;
+      dbSave();
+      if(passed) toast(`🏆 Тест пройден! ${score}% — отличная работа!`,'success');
+      else toast(`📖 ${score}% — нужно ещё подготовиться`,'info');
+    }
+  }
+}
+
+function pickAnswer(stepIdx, optIdx) {
+  if (LS.answers[stepIdx]!==undefined) return;
+  LS.answers[stepIdx] = optIdx;
+  const q = LS.steps[stepIdx].q;
+  if(optIdx===q.correct) toast('✅ Правильно!','success');
+  else toast('❌ Неверно — прочитайте пояснение','error');
+  renderLessonStep();
+}
+
+function completeLesson() {
+  if (!LS.done) {
+    markLessonDone(CU.id, LS.lid, 100);
+    LS.done=true;
+    const xp=LS.lesson.xp||0;
+    toast(`✅ +${xp}XP — урок пройден!`,'points');
+    dbSave();
+  }
+  // Find next lesson
+  const m=LS.module; const c=LS.course;
+  const lessons=(m.lessons||[]).sort((a,b)=>a.order-b.order);
+  const idx=lessons.findIndex(l=>l.id===LS.lid);
+  const next=lessons[idx+1];
+  const body=document.getElementById('lesson-body');
+  body.innerHTML=`<div class="completion">
+    <div class="compl-icon">✅</div>
+    <div class="compl-title">Урок завершён!</div>
+    <div class="compl-sub">«${LS.lesson.title}»</div>
+    <div class="compl-pts">⭐ +${LS.lesson.xp||0} XP</div>
+    <div class="compl-actions">
+      ${next?`<button class="btn btn-primary btn-lg" onclick="startLesson(${LS.cid},${LS.mid},${next.id})">→ ${next.title}</button>`:''}
+      <button class="btn btn-secondary btn-lg" onclick="closeLesson()">← К курсу</button>
+    </div>
+  </div>`;
+  document.getElementById('ls-next').style.display='none';
+}
+
+// ══ ADMIN INIT ═════════════════════════════════════
+function initAdmin() {
+  aTab('adm-dash');
+  document.getElementById('notif-dot').style.display = 'block';
+  document.getElementById('notif-dot').textContent = DB_NOTIFS.length;
+}
+
+function aTab(name) {
+  document.querySelectorAll('#screen-admin .page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#admin-side .sn-item').forEach(n=>{ n.classList.remove('active'); n.style.color='rgba(255,255,255,.55)'; n.style.background=''; });
+  const pg = document.getElementById('apage-'+name);
+  if (pg) { pg.classList.add('active'); buildAdminPage(name, pg); }
+  const nav = document.querySelector(`#admin-side .sn-item[data-at="${name}"]`);
+  if (nav) { nav.classList.add('active'); nav.style.color='#4ADE80'; nav.style.background='rgba(0,166,81,.18)'; }
+  document.getElementById('admin-side').classList.remove('open');
+  closeDropdowns();
+}
+
+function buildAdminPage(name, el) {
+  if (name==='adm-dash')      el.innerHTML = buildAdminDash();
+  if (name==='adm-users')     el.innerHTML = buildAdminUsers();
+  if (name==='adm-catalog')   el.innerHTML = buildAdminCatalog();
+  if (name==='adm-content')   el.innerHTML = buildAdminContent();
+  if (name==='adm-results')   el.innerHTML = buildAdminResults();
+  if (name==='adm-analytics') el.innerHTML = buildAdminAnalytics();
+  if (name==='adm-assign')    el.innerHTML = buildAdminAssign();
+}
+
+// ── Admin Dashboard ──
+function buildAdminDash() {
+  const consultants = DB_USERS.filter(u=>u.role==='user');
+  const active  = consultants.filter(u=>u.status==='active').length;
+  const blocked = consultants.filter(u=>u.status==='blocked').length;
+  const passed  = DB_RESULTS.filter(r=>r.passed).length;
+  const avgScore= DB_RESULTS.length ? Math.round(DB_RESULTS.reduce((s,r)=>s+r.score,0)/DB_RESULTS.length) : 0;
+  const atRisk  = consultants.filter(u=>{
+    const p=getUserProgress(u.id);
+    const lastDone=Object.values(p).sort((a,b)=>b.date>a.date?1:-1)[0]?.date;
+    if(!lastDone) return u.status==='active';
+    return ((new Date()-new Date(lastDone))/864e5)>7;
+  });
+  const deadlineSoon = consultants.filter(u=>u.deadline&&((new Date(u.deadline)-new Date())/864e5)<=7&&((new Date(u.deadline)-new Date())/864e5)>=0);
+
+  return `<div class="view-header"><h2>📊 Дашборд</h2><p>${new Date().toLocaleDateString('ru-KZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>
+  <div class="stats-grid" style="grid-template-columns:repeat(6,1fr)">
+    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">${consultants.length}</div><div class="stat-lab">Консультантов</div></div>
+    <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-val">${active}</div><div class="stat-lab">Активных</div></div>
+    <div class="stat-card" style="${blocked?'border-color:#FECACA;background:#FFF5F5':''}"><div class="stat-icon">🔒</div><div class="stat-val" style="${blocked?'color:var(--red)':''}">${blocked}</div><div class="stat-lab">Заблокированных</div></div>
+    <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val">${passed}</div><div class="stat-lab">Тестов сдано</div></div>
+    <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-val">${avgScore}%</div><div class="stat-lab">Средний балл</div></div>
+    <div class="stat-card" style="${deadlineSoon.length?'border-color:#FDE68A;background:#FFFBF0':''}"><div class="stat-icon">⏰</div><div class="stat-val" style="${deadlineSoon.length?'color:var(--amber)':''}">${deadlineSoon.length}</div><div class="stat-lab">Дедлайн < 7 дней</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div>
+      <div class="section-title">⚠️ Требуют внимания</div>
+      ${atRisk.slice(0,5).map(u=>`<div style="background:#fff;border:1px solid #FECACA;border-radius:var(--rs);padding:11px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px">
+        <span>⚠️</span>
+        <div style="flex:1"><div style="font-size:.84rem;font-weight:600">${u.firstName} ${u.lastName}</div>
+        <div style="font-size:.72rem;color:var(--muted)">${u.dept}</div></div>
+        <button class="btn btn-secondary btn-sm" onclick="sendReminder('${u.firstName} ${u.lastName}')">📨 Напомнить</button>
+      </div>`).join('')||'<div style="text-align:center;padding:20px;color:var(--muted)">✅ Все в норме</div>'}
+    </div>
+    <div>
+      <div class="section-title">🏆 Топ-5 по прогрессу</div>
+      ${DB_USERS.filter(u=>u.role==='user').map(u=>{
+        let xp=0;DB_COURSES.forEach(c=>(c.modules||[]).forEach(m=>(m.lessons||[]).forEach(l=>{if(isLessonDone(u.id,l.id))xp+=l.xp||0;})));
+        return {u,xp};
+      }).sort((a,b)=>b.xp-a.xp).slice(0,5).map(({u,xp},i)=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+          <div style="width:20px;font-size:.85rem;font-weight:800;color:var(--muted);text-align:center">${['🥇','🥈','🥉','4','5'][i]}</div>
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">${(u.firstName[0]||'')+(u.lastName?.[0]||'')}</div>
+          <div style="flex:1"><div style="font-size:.84rem;font-weight:600">${u.firstName} ${u.lastName}</div><div style="font-size:.7rem;color:var(--muted)">${u.dept}</div></div>
+          <div style="font-size:.88rem;font-weight:800;color:var(--g)">${xp}XP</div>
+        </div>`).join('')}
+    </div>
+  </div>
+  <div class="section-title">🕐 Последние результаты</div>
+  <div class="table-wrap"><table class="adm-table">
+    <thead><tr><th>Консультант</th><th>Курс</th><th>Результат</th><th>Дата</th><th>Статус</th></tr></thead>
+    <tbody>${DB_RESULTS.sort((a,b)=>b.id-a.id).slice(0,8).map(r=>{
+      const u=getUser(r.userId);const c=getCourse(r.courseId);
+      return `<tr><td><strong>${u?.firstName} ${u?.lastName}</strong></td><td>${c?.icon} ${c?.name}</td>
+        <td><strong>${r.score}%</strong></td><td>${r.date}</td>
+        <td><span class="status-badge ${r.passed?'sb-active':'sb-blocked'}">${r.passed?'✅ Пройден':'❌ Не пройден'}</span></td></tr>`;
+    }).join('')||'<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">Нет данных</td></tr>'}</tbody>
+  </table></div>`;
+}
+
+// ── Admin Users ──
+function buildAdminUsers(search='', deptF='', statusF='') {
+  let users = DB_USERS.filter(u=>u.role==='user');
+  if(search) users=users.filter(u=>(u.firstName+' '+u.lastName+' '+u.login).toLowerCase().includes(search.toLowerCase()));
+  if(deptF) users=users.filter(u=>u.dept===deptF);
+  if(statusF==='active') users=users.filter(u=>u.status==='active');
+  if(statusF==='blocked') users=users.filter(u=>u.status==='blocked');
+
+  return `<div class="view-header"><div><h2>👥 Консультанты</h2><p>Управление аккаунтами и доступами</p></div>
+    <div style="display:flex;gap:10px"><button class="btn btn-secondary" onclick="exportUsers()">⬇️ Экспорт</button><button class="btn btn-primary" onclick="openUserModal()">+ Добавить</button></div>
+  </div>
+  <div class="filter-bar">
+    <input class="filter-search" type="text" placeholder="🔍 Поиск по имени, логину..." value="${search}" oninput="refreshUsers(this.value,document.getElementById('f-dept').value,document.getElementById('f-status').value)"/>
+    <select id="f-dept" onchange="refreshUsers(document.querySelector('.filter-search').value,this.value,document.getElementById('f-status').value)">
+      <option value="">Все подразделения</option>
+      ${[...new Set(DB_USERS.map(u=>u.dept))].map(d=>`<option${deptF===d?' selected':''}>${d}</option>`).join('')}
+    </select>
+    <select id="f-status" onchange="refreshUsers(document.querySelector('.filter-search').value,document.getElementById('f-dept').value,this.value)">
+      <option value="">Все статусы</option>
+      <option value="active"${statusF==='active'?' selected':''}>Активные</option>
+      <option value="blocked"${statusF==='blocked'?' selected':''}>Заблокированные</option>
+    </select>
+  </div>
+  <div class="table-wrap"><table class="adm-table">
+    <thead><tr><th>Консультант</th><th>Логин</th><th>Подразделение</th><th>Доступ к курсам</th><th>Прогресс</th><th>Дедлайн</th><th>Статус</th><th>Действия</th></tr></thead>
+    <tbody>${users.map(u=>{
+      let xp=0,totalDone=0,totalAll=0;
+      DB_COURSES.forEach(c=>{const[d,a]=getCourseDone(u.id,c.id);totalDone+=d;totalAll+=a;(c.modules||[]).forEach(m=>(m.lessons||[]).forEach(l=>{if(isLessonDone(u.id,l.id))xp+=l.xp||0;}));});
+      const pct=totalAll?Math.round(totalDone/totalAll*100):0;
+      const dl=u.deadline?new Date(u.deadline).toLocaleDateString('ru-KZ',{day:'2-digit',month:'short'}):'—';
+      const daysLeft=u.deadline?Math.ceil((new Date(u.deadline)-new Date())/864e5):null;
+      const dlColor=daysLeft!==null?(daysLeft<=3?'var(--red)':daysLeft<=7?'var(--amber)':'var(--g)'):'var(--muted)';
+      const courseCount = u.courses==='all' ? 'Все' : (u.courses||[]).length+' курс(а)';
+      const ini=(u.firstName[0]||'')+(u.lastName?.[0]||'');
+      return `<tr>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:30px;height:30px;border-radius:50%;background:${u.status==='blocked'?'var(--muted)':'var(--g)'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">${ini}</div>
+          <div><div style="font-weight:600;font-size:.88rem">${u.firstName} ${u.lastName}</div><div style="font-size:.72rem;color:var(--muted)">${u.email}</div></div>
+        </div></td>
+        <td>${u.login}</td>
+        <td style="font-size:.84rem">${u.dept}</td>
+        <td><span style="font-size:.78rem;background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:10px;font-weight:600">${courseCount}</span></td>
+        <td>
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:4px">${pct}%</div>
+          <div style="height:4px;background:var(--mist);border-radius:4px;overflow:hidden;width:80px">
+            <div style="height:100%;width:${pct}%;background:${pct>=70?'var(--g)':pct>=40?'var(--amber)':'var(--red)'}"></div>
+          </div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${totalDone}/${totalAll} ур. · ${xp}XP</div>
+        </td>
+        <td><span style="font-size:.82rem;font-weight:700;color:${dlColor}">${dl}</span></td>
+        <td><span class="status-badge ${u.status==='active'?'sb-active':'sb-blocked'}">${u.status==='active'?'Активен':'Заблокирован'}</span></td>
+        <td><div class="actions-cell">
+          <button class="btn btn-warn btn-sm" onclick="openUserModal(${u.id})">✏️</button>
+          <button class="btn btn-secondary btn-sm" onclick="toggleBlock(${u.id})">${u.status==='active'?'🔒':'🔓'}</button>
+          <button class="btn btn-secondary btn-sm" onclick="sendReminder('${u.firstName}')">📨</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">🗑️</button>
+        </div></td>
+      </tr>`;
+    }).join('')||'<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--muted)">Нет консультантов</td></tr>'}</tbody>
+  </table></div>`;
+}
+
+function refreshUsers(s,d,st) {
+  const pg = document.getElementById('apage-adm-users');
+  if(pg) pg.innerHTML = buildAdminUsers(s,d,st);
+}
+
+// ── Admin Catalog ──
+function buildAdminCatalog() {
+  return `<div class="view-header"><div><h2>📚 Каталог курсов</h2><p>Управление структурой курсов</p></div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+  ${DB_COURSES.map(c=>{
+    const enrolled = DB_USERS.filter(u=>u.role==='user'&&hasAccess(u,c.id)).length;
+    const[d,a]=(() => {let td=0,ta=0;DB_USERS.filter(u=>u.role==='user').forEach(u=>{const[dd,aa]=getCourseDone(u.id,c.id);td+=dd;ta+=aa;});return[td,ta];})();
+    return `<div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:all .2s">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div style="font-size:1.5rem">${c.icon}</div>
+        <span class="status-badge ${c.status==='active'?'sb-active':c.status==='wip'?'sb-draft':'sb-blocked'}">${c.status==='active'?'Активен':c.status==='wip'?'В разработке':'Черновик'}</span>
+      </div>
+      <div style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:4px">${c.name}</div>
+      <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px">${c.desc.substring(0,80)}…</div>
+      <div style="display:flex;gap:12px;font-size:.76rem;color:var(--muted);margin-bottom:12px">
+        <span>📚 ${(c.modules||[]).length} модулей</span>
+        <span>👥 ${enrolled} чел.</span>
+        <span>📖 ${d}/${a} ур.</span>
+      </div>
+      <div style="display:flex;gap:7px">
+        <button class="btn btn-secondary btn-sm" style="flex:1" onclick="editCourse(${c.id})">✏️ Редактировать</button>
+        <button class="btn btn-primary btn-sm" style="flex:1" onclick="aTab('adm-content');selectCourseContent(${c.id})">📝 Контент</button>
+      </div>
+    </div>`;
+  }).join('')}
+  <div style="background:var(--mist);border:2px dashed var(--border);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;min-height:180px" onclick="newCourse()">
+    <div style="font-size:2rem;margin-bottom:8px">+</div>
+    <div style="font-size:.88rem;font-weight:600;color:var(--muted)">Добавить курс</div>
+  </div>
+  </div>`;
+}
+
+// ── Admin Content ──
+let selectedCourse=null, selectedModule=null;
+
+function buildAdminContent() {
+  return `<div class="view-header"><h2>✏️ Редактор контента</h2><p>Управление модулями и уроками</p></div>
+  <div class="content-tree">
+    <div class="tree-panel">
+      <div class="tree-header">Курсы <button class="btn btn-primary btn-sm" onclick="newCourse()">+</button></div>
+      ${DB_COURSES.map(c=>`
+        <div class="tree-item ${selectedCourse===c.id&&!selectedModule?'active':''}" onclick="selectCourseContent(${c.id})">
+          <span>${c.icon}</span><span style="flex:1">${c.name}</span>
+          <span style="font-size:.7rem;color:var(--muted)">${(c.modules||[]).length}м</span>
+        </div>
+        ${selectedCourse===c.id?(c.modules||[]).sort((a,b)=>a.order-b.order).map(m=>`
+          <div class="tree-item sub ${selectedModule===m.id?'active':''}" onclick="selectModuleContent(${c.id},${m.id})">
+            <span>${m.icon}</span><span style="flex:1">${m.name}</span>
+            <span style="font-size:.7rem;color:var(--muted)">${(m.lessons||[]).length}ур</span>
+          </div>
+          ${selectedModule===m.id?(m.lessons||[]).sort((a,b)=>a.order-b.order).map(l=>`
+            <div class="tree-item sub2" onclick="editLesson(${c.id},${m.id},${l.id})">${typeLabel(l.type)} ${l.title}</div>
+          `).join(''):''}
+        `).join(''):''}
+      `).join('')}
+    </div>
+    <div class="detail-panel" id="content-detail">
+      ${selectedCourse?buildContentDetail():buildContentEmpty()}
+    </div>
+  </div>`;
+}
+
+function buildContentEmpty() { return `<div class="detail-empty"><div style="font-size:2rem;margin-bottom:12px">👈</div><div>Выберите курс или модуль для редактирования</div></div>`; }
+
+function buildContentDetail() {
+  if (!selectedCourse) return buildContentEmpty();
+  const c=getCourse(selectedCourse);
+  if (!c) return buildContentEmpty();
+
+  if (selectedModule) {
+    const m=getModule(selectedCourse, selectedModule);
+    if (!m) return buildContentEmpty();
+    return `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div><h3>${m.icon} ${m.name}</h3><div style="font-size:.8rem;color:var(--muted)">${m.desc}</div></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-warn btn-sm" onclick="editModule(${c.id},${m.id})">✏️ Ред. модуль</button>
+        <button class="btn btn-primary btn-sm" onclick="newLesson(${c.id},${m.id})">+ Урок</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteModule(${c.id},${m.id})">🗑️</button>
+      </div>
+    </div>
+    <div>${(m.lessons||[]).sort((a,b)=>a.order-b.order).map(l=>`
+      <div style="background:var(--mist);border:1px solid var(--border);border-radius:var(--rs);padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:11px">
+        <span style="font-size:1rem">${typeLabel(l.type)}</span>
+        <div style="flex:1"><div style="font-size:.88rem;font-weight:700">${l.title}</div>
+        <div style="font-size:.74rem;color:var(--muted)">⏱️ ${l.dur}мин · ⭐ ${l.xp}XP · Порядок: ${l.order}</div></div>
+        <button class="btn btn-warn btn-sm" onclick="editLesson(${c.id},${m.id},${l.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLesson(${c.id},${m.id},${l.id})">🗑️</button>
+      </div>`).join('')||'<div style="text-align:center;padding:30px;color:var(--muted)">Нет уроков</div>'}
+    </div>`;
+  }
+
+  return `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div><h3>${c.icon} ${c.name}</h3><div style="font-size:.8rem;color:var(--muted)">${c.desc}</div></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-warn btn-sm" onclick="editCourse(${c.id})">✏️ Ред. курс</button>
+      <button class="btn btn-primary btn-sm" onclick="newModule(${c.id})">+ Модуль</button>
+    </div>
+  </div>
+  <div>${(c.modules||[]).sort((a,b)=>a.order-b.order).map(m=>`
+    <div style="background:var(--mist);border:1px solid var(--border);border-radius:var(--rs);padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:11px;cursor:pointer" onclick="selectModuleContent(${c.id},${m.id})">
+      <div style="width:36px;height:36px;border-radius:8px;background:${m.color}22;display:flex;align-items:center;justify-content:center;font-size:1rem">${m.icon}</div>
+      <div style="flex:1"><div style="font-size:.88rem;font-weight:700">${m.name}</div>
+      <div style="font-size:.74rem;color:var(--muted)">${(m.lessons||[]).length} уроков · Порядок: ${m.order}</div></div>
+      <button class="btn btn-warn btn-sm" onclick="event.stopPropagation();editModule(${c.id},${m.id})">✏️</button>
+      <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteModule(${c.id},${m.id})">🗑️</button>
+    </div>`).join('')||'<div style="text-align:center;padding:30px;color:var(--muted)">Нет модулей</div>'}
+  </div>`;
+}
+
+function selectCourseContent(cid) { selectedCourse=cid; selectedModule=null; aTab('adm-content'); }
+function selectModuleContent(cid, mid) { selectedCourse=cid; selectedModule=mid; aTab('adm-content'); }
+
+// ── Admin Results ──
+function buildAdminResults(uF='',cF='',sF='') {
+  let res=[...DB_RESULTS].sort((a,b)=>b.id-a.id);
+  if(uF) res=res.filter(r=>r.userId===parseInt(uF));
+  if(cF) res=res.filter(r=>r.courseId===parseInt(cF));
+  if(sF==='pass') res=res.filter(r=>r.passed);
+  if(sF==='fail') res=res.filter(r=>!r.passed);
+
+  const uOpts=DB_USERS.filter(u=>u.role==='user').map(u=>`<option value="${u.id}"${parseInt(uF)===u.id?' selected':''}>${u.firstName} ${u.lastName}</option>`).join('');
+  const cOpts=DB_COURSES.map(c=>`<option value="${c.id}"${parseInt(cF)===c.id?' selected':''}>${c.name}</option>`).join('');
+
+  return `<div class="view-header"><div><h2>🎯 Результаты тестирования</h2></div><button class="btn btn-secondary" onclick="toast('Экспорт...')">⬇️ CSV</button></div>
+  <div class="filter-bar">
+    <select onchange="refreshResults(this.value,document.querySelectorAll('.filter-bar select')[1].value,document.querySelectorAll('.filter-bar select')[2].value)">
+      <option value="">Все консультанты</option>${uOpts}
+    </select>
+    <select onchange="refreshResults(document.querySelectorAll('.filter-bar select')[0].value,this.value,document.querySelectorAll('.filter-bar select')[2].value)">
+      <option value="">Все курсы</option>${cOpts}
+    </select>
+    <select onchange="refreshResults(document.querySelectorAll('.filter-bar select')[0].value,document.querySelectorAll('.filter-bar select')[1].value,this.value)">
+      <option value="">Все</option><option value="pass"${sF==='pass'?' selected':''}>✅ Пройден</option><option value="fail"${sF==='fail'?' selected':''}>❌ Не пройден</option>
+    </select>
+  </div>
+  <div class="table-wrap"><table class="adm-table">
+    <thead><tr><th>Консультант</th><th>Курс</th><th>Результат</th><th>Дата</th><th>Статус</th></tr></thead>
+    <tbody>${res.map(r=>{
+      const u=getUser(r.userId);const c=getCourse(r.courseId);
+      return `<tr><td><strong>${u?.firstName} ${u?.lastName}</strong><br/><span style="font-size:.7rem;color:var(--muted)">${u?.dept}</span></td>
+        <td>${c?.icon} ${c?.name}</td><td><strong>${r.score}%</strong></td><td>${r.date}</td>
+        <td><span class="status-badge ${r.passed?'sb-active':'sb-blocked'}">${r.passed?'✅ Пройден':'❌ Не пройден'}</span></td></tr>`;
+    }).join('')||'<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">Нет данных</td></tr>'}</tbody>
+  </table></div>`;
+}
+function refreshResults(u,c,s){const pg=document.getElementById('apage-adm-results');if(pg)pg.innerHTML=buildAdminResults(u,c,s);}
+
+// ── Admin Analytics ──
+function buildAdminAnalytics() {
+  const depts=[...new Set(DB_USERS.filter(u=>u.role==='user').map(u=>u.dept))];
+  return `<div class="view-header"><h2>📈 Аналитика</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px">
+      <div class="section-title">🏢 По подразделениям</div>
+      ${depts.map(d=>{
+        const du=DB_USERS.filter(u=>u.role==='user'&&u.dept===d);
+        let td=0,ta=0;du.forEach(u=>{const[dd,aa]=(() => {let ddd=0,aaa=0;DB_COURSES.forEach(c=>{const[d2,a2]=getCourseDone(u.id,c.id);ddd+=d2;aaa+=a2;});return[ddd,aaa];})();td+=dd;ta+=aa;});
+        const p=ta?Math.round(td/ta*100):0;
+        return `<div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.84rem;font-weight:600">${d}</span><span style="font-size:.82rem;font-weight:700;color:${p>=70?'var(--g)':p>=40?'var(--amber)':'var(--red)'}">${p}%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:${p}%;background:${p>=70?'var(--g)':p>=40?'var(--amber)':'var(--red)'}"></div></div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${du.length} чел.</div>
+        </div>`;}).join('')}
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px">
+      <div class="section-title">📊 Эффективность курсов</div>
+      ${DB_COURSES.filter(c=>c.status==='active').map(c=>{
+        const res=DB_RESULTS.filter(r=>r.courseId===c.id);
+        const avg=res.length?Math.round(res.reduce((s,r)=>s+r.score,0)/res.length):0;
+        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
+          <span style="font-size:1rem;width:20px">${c.icon}</span>
+          <div style="flex:1"><div style="font-size:.82rem;font-weight:600;margin-bottom:3px">${c.name}</div>
+          <div class="prog-bar"><div class="prog-fill" style="width:${avg}%;background:${avg>=70?'var(--g)':'var(--amber)'}"></div></div></div>
+          <span style="font-size:.84rem;font-weight:700;color:${avg>=70?'var(--g)':'var(--amber)'}${!res.length?';color:var(--muted)':''}">${res.length?avg+'%':'—'}</span>
+        </div>`;}).join('')}
+    </div>
+  </div>`;
+}
+
+// ── Admin Assignments ──
+function buildAdminAssign() {
+  const d=new Date();d.setDate(d.getDate()+30);
+  return `<div class="view-header"><div><h2>📋 Назначения</h2><p>Обязательные курсы и дедлайны</p></div>
+    <button class="btn btn-primary" onclick="openAssignModal()">+ Назначить</button>
+  </div>
+  ${DB_ASSIGNMENTS.map(a=>{
+    const d2=new Date(a.deadline);const days=Math.ceil((d2-new Date())/864e5);
+    const dc=days<=3?'urgent':days<=7?'soon':'ok';
+    return `<div class="assign-card">
+      <div class="ac-icon">${a.priority==='mandatory'?'📋':'💡'}</div>
+      <div class="ac-info">
+        <div class="ac-title">${a.courseName} <span style="font-size:.7rem;background:${a.priority==='mandatory'?'#FEE2E2':'var(--gl)'};color:${a.priority==='mandatory'?'#7F1D1D':'var(--gd)'};padding:2px 7px;border-radius:8px;font-weight:700">${a.priority==='mandatory'?'ОБЯЗАТЕЛЬНО':'РЕКОМЕНДОВАНО'}</span></div>
+        <div class="ac-meta">👥 ${a.targetLabel} · Создано: ${a.createdAt}</div>
+      </div>
+      <div><div class="ac-deadline ${dc}">⏰ ${new Date(a.deadline).toLocaleDateString('ru-KZ',{day:'2-digit',month:'short'})}</div>
+      <div style="font-size:.72rem;color:var(--muted)">${days>0?days+' дн. осталось':'Просрочено'}</div></div>
+      <button class="btn btn-danger btn-sm" onclick="DB_ASSIGNMENTS=DB_ASSIGNMENTS.filter(x=>x.id!==${a.id});dbSave();aTab('adm-assign')">✕</button>
+    </div>`;
+  }).join('')||'<div class="empty"><span>📭</span>Нет активных назначений</div>'}`;
+}
+
+// ══ CRUD MODALS ════════════════════════════════════
+
+// User modal
+function openUserModal(uid=null) {
+  const u=uid?DB_USERS.find(x=>x.id===uid):null;
+  document.getElementById('modal-user-h').textContent = u?'Редактировать консультанта':'Новый консультант';
+  document.getElementById('mu-id').value = uid||'';
+  document.getElementById('mu-first').value = u?.firstName||'';
+  document.getElementById('mu-last').value  = u?.lastName||'';
+  document.getElementById('mu-login').value = u?.login||'';
+  document.getElementById('mu-pass').value  = u?.pass||'';
+  document.getElementById('mu-email').value = u?.email||'';
+  document.getElementById('mu-dept').value  = u?.dept||'Алматы — Офис 1';
+  document.getElementById('mu-deadline').value = u?.deadline||(() => { const d=new Date();d.setDate(d.getDate()+30);return d.toISOString().slice(0,10); })();
+  document.getElementById('mu-status').value = u?.status||'active';
+  // Course checkboxes
+  const courses = u?.courses==='all' ? DB_COURSES.map(c=>c.id) : (u?.courses||[]);
+  document.getElementById('mu-courses').innerHTML = `
+    <label class="check-item"><input type="checkbox" id="mu-all-courses" ${!u||u.courses==='all'?'checked':''} onchange="toggleAllCourses(this)"/> Все курсы</label>
+    ${DB_COURSES.map(c=>`<label class="check-item"><input type="checkbox" name="mu-course" value="${c.id}" ${courses.includes(c.id)||(!u||u.courses==='all')?'checked':''}/> ${c.icon} ${c.name}</label>`).join('')}`;
+  openModal('modal-user');
+}
+
+function toggleAllCourses(cb) {
+  document.querySelectorAll('[name="mu-course"]').forEach(i=>i.checked=cb.checked);
+}
+
+function saveUser() {
+  const id    = document.getElementById('mu-id').value;
+  const first = document.getElementById('mu-first').value.trim();
+  const last  = document.getElementById('mu-last').value.trim();
+  const login = document.getElementById('mu-login').value.trim();
+  const pass  = document.getElementById('mu-pass').value.trim();
+  const email = document.getElementById('mu-email').value.trim();
+  const dept  = document.getElementById('mu-dept').value;
+  const dl    = document.getElementById('mu-deadline').value;
+  const status= document.getElementById('mu-status').value;
+  if (!first||!login||!pass) { toast('Заполните обязательные поля','error'); return; }
+  if (DB_USERS.find(u=>u.login===login&&u.id!==parseInt(id))) { toast('Логин уже занят','error'); return; }
+  const allCb = document.getElementById('mu-all-courses');
+  const selected = allCb?.checked ? 'all' : [...document.querySelectorAll('[name="mu-course"]:checked')].map(i=>parseInt(i.value));
+  const ini=(first[0]||'')+(last[0]||'');
+  if (id) {
+    const idx=DB_USERS.findIndex(u=>u.id===parseInt(id));
+    DB_USERS[idx]={...DB_USERS[idx],firstName:first,lastName:last,login,pass,email,dept,deadline:dl,status,courses:selected,ini,avatar:ini};
+  } else {
+    DB_USERS.push({id:DB_IDS.user++,login,pass,role:'user',firstName:first,lastName:last,dept,email,status:'active',deadline:dl,courses:selected,avatar:ini});
+  }
+  dbSave(); closeModal(); aTab('adm-users');
+  toast('Консультант сохранён ✓','success');
+  if (selected!=='all') DB_NOTIFS.unshift({icon:'👤',text:`${first} ${last} — доступ к ${selected==='all'?'всем':selected.length} курсам`,time:'Только что'});
+}
+
+function toggleBlock(uid) {
+  const u=DB_USERS.find(x=>x.id===uid);if(!u)return;
+  u.status=u.status==='active'?'blocked':'active';
+  dbSave();aTab('adm-users');
+  toast(`${u.status==='active'?'✅ Разблокирован':'🔒 Заблокирован'}: ${u.firstName} ${u.lastName}`);
+}
+
+function deleteUser(uid) {
+  if(!confirm('Удалить консультанта? Все данные прогресса будут удалены.'))return;
+  DB_USERS=DB_USERS.filter(u=>u.id!==uid);
+  DB_RESULTS=DB_RESULTS.filter(r=>r.userId!==uid);
+  delete DB_PROGRESS[uid];
+  dbSave();aTab('adm-users');toast('Консультант удалён');
+}
+
+function exportUsers() {
+  const rows=[['Имя','Логин','Подразделение','Статус','Прогресс%']];
+  DB_USERS.filter(u=>u.role==='user').forEach(u=>{
+    let td=0,ta=0;DB_COURSES.forEach(c=>{const[d,a]=getCourseDone(u.id,c.id);td+=d;ta+=a;});
+    rows.push([`${u.firstName} ${u.lastName}`,u.login,u.dept,u.status,ta?Math.round(td/ta*100):0]);
+  });
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));a.download='consultants.csv';a.click();
+  toast('Экспорт выполнен','success');
+}
+
+// Course modal
+function newCourse() {
+  document.getElementById('modal-course-h').textContent='Новый курс';
+  document.getElementById('mc-id').value='';
+  ['mc-name','mc-desc'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('mc-icon').value='📚';
+  document.getElementById('mc-cat').value='nsj';
+  document.getElementById('mc-status').value='active';
+  document.getElementById('mc-color').value='#00A651';
+  openModal('modal-course');
+}
+
+function editCourse(cid) {
+  const c=getCourse(cid);if(!c)return;
+  document.getElementById('modal-course-h').textContent='Редактировать курс';
+  document.getElementById('mc-id').value=c.id;
+  document.getElementById('mc-name').value=c.name;
+  document.getElementById('mc-icon').value=c.icon;
+  document.getElementById('mc-desc').value=c.desc;
+  document.getElementById('mc-cat').value=c.cat;
+  document.getElementById('mc-status').value=c.status;
+  document.getElementById('mc-color').value=c.color||'#00A651';
+  openModal('modal-course');
+}
+
+function saveCourse() {
+  const id=document.getElementById('mc-id').value;
+  const name=document.getElementById('mc-name').value.trim();
+  if(!name){toast('Введите название','error');return;}
+  const data={name,icon:document.getElementById('mc-icon').value||'📚',desc:document.getElementById('mc-desc').value.trim(),cat:document.getElementById('mc-cat').value,status:document.getElementById('mc-status').value,color:document.getElementById('mc-color').value};
+  if(id){const idx=DB_COURSES.findIndex(c=>c.id===parseInt(id));DB_COURSES[idx]={...DB_COURSES[idx],...data};}
+  else DB_COURSES.push({id:DB_IDS.course++,...data,modules:[]});
+  dbSave();closeModal();aTab('adm-catalog');toast('Курс сохранён ✓','success');
+}
+
+// Module modal
+function newModule(cid) {
+  document.getElementById('modal-module-h').textContent='Новый модуль';
+  document.getElementById('mm-cid').value=cid;document.getElementById('mm-mid').value='';
+  ['mm-name','mm-desc'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('mm-icon').value='📖';
+  document.getElementById('mm-color').value='#00A651';
+  document.getElementById('mm-order').value=((getCourse(cid)?.modules||[]).length+1);
+  openModal('modal-module');
+}
+
+function editModule(cid, mid) {
+  const m=getModule(cid,mid);if(!m)return;
+  document.getElementById('modal-module-h').textContent='Редактировать модуль';
+  document.getElementById('mm-cid').value=cid;document.getElementById('mm-mid').value=mid;
+  document.getElementById('mm-name').value=m.name;
+  document.getElementById('mm-desc').value=m.desc||'';
+  document.getElementById('mm-icon').value=m.icon;
+  document.getElementById('mm-color').value=m.color||'#00A651';
+  document.getElementById('mm-order').value=m.order||1;
+  openModal('modal-module');
+}
+
+function saveModule() {
+  const cid=parseInt(document.getElementById('mm-cid').value);
+  const mid=document.getElementById('mm-mid').value;
+  const name=document.getElementById('mm-name').value.trim();
+  if(!name){toast('Введите название','error');return;}
+  const data={name,desc:document.getElementById('mm-desc').value.trim(),icon:document.getElementById('mm-icon').value||'📖',color:document.getElementById('mm-color').value,order:parseInt(document.getElementById('mm-order').value)||1};
+  const c=getCourse(cid);if(!c)return;
+  if(mid){const idx=c.modules.findIndex(m=>m.id===parseInt(mid));c.modules[idx]={...c.modules[idx],...data};}
+  else c.modules.push({id:DB_IDS.module++,...data,lessons:[]});
+  dbSave();closeModal();selectCourseContent(cid);aTab('adm-content');toast('Модуль сохранён ✓','success');
+}
+
+function deleteModule(cid, mid) {
+  if(!confirm('Удалить модуль и все его уроки?'))return;
+  const c=getCourse(cid);if(!c)return;
+  c.modules=c.modules.filter(m=>m.id!==mid);
+  selectedModule=null;
+  dbSave();selectCourseContent(cid);aTab('adm-content');toast('Модуль удалён');
+}
+
+// Lesson modal
+function newLesson(cid, mid) {
+  document.getElementById('modal-lesson-h').textContent='Новый урок';
+  document.getElementById('ml-cid').value=cid;document.getElementById('ml-mid').value=mid;document.getElementById('ml-lid').value='';
+  ['ml-title','ml-intro','ml-text','ml-kp','ml-questions'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('ml-type').value='story';
+  document.getElementById('ml-dur').value=5;document.getElementById('ml-xp').value=50;document.getElementById('ml-pts').value=40;
+  document.getElementById('ml-order').value=((getModule(cid,mid)?.lessons||[]).length+1);
+  toggleLessonFields();
+  openModal('modal-lesson');
+}
+
+function editLesson(cid, mid, lid) {
+  const l=getLesson(cid,mid,lid);if(!l)return;
+  document.getElementById('modal-lesson-h').textContent='Редактировать урок';
+  document.getElementById('ml-cid').value=cid;document.getElementById('ml-mid').value=mid;document.getElementById('ml-lid').value=lid;
+  document.getElementById('ml-title').value=l.title;
+  document.getElementById('ml-type').value=l.type;
+  document.getElementById('ml-dur').value=l.dur||5;
+  document.getElementById('ml-xp').value=l.xp||50;
+  document.getElementById('ml-pts').value=l.pts||40;
+  document.getElementById('ml-order').value=l.order||1;
+  document.getElementById('ml-intro').value=l.intro||'';
+  document.getElementById('ml-text').value=l.text||'';
+  document.getElementById('ml-kp').value=(l.keyPoints||[]).map(k=>'• '+k).join('\n');
+  document.getElementById('ml-questions').value=l.questions?JSON.stringify(l.questions,null,2):'';
+  toggleLessonFields();
+  openModal('modal-lesson');
+}
+
+function toggleLessonFields() {
+  const t=document.getElementById('ml-type').value;
+  document.getElementById('ml-story-area').style.display=t==='quiz'?'none':'block';
+  document.getElementById('ml-quiz-area').style.display=t==='quiz'?'block':'none';
+}
+
+function saveLesson() {
+  const cid=parseInt(document.getElementById('ml-cid').value);
+  const mid=parseInt(document.getElementById('ml-mid').value);
+  const lid=document.getElementById('ml-lid').value;
+  const title=document.getElementById('ml-title').value.trim();
+  if(!title){toast('Введите название урока','error');return;}
+  const type=document.getElementById('ml-type').value;
+  const kpRaw=document.getElementById('ml-kp').value.trim();
+  const kp=kpRaw?kpRaw.split('\n').map(s=>s.replace(/^[•\-\*]\s*/,'').trim()).filter(Boolean):[];
+  let qs=[];
+  if(type==='quiz'){try{qs=JSON.parse(document.getElementById('ml-questions').value||'[]');}catch(e){toast('Ошибка в формате JSON вопросов','error');return;}}
+  const data={title,type,dur:parseInt(document.getElementById('ml-dur').value)||5,xp:parseInt(document.getElementById('ml-xp').value)||50,pts:parseInt(document.getElementById('ml-pts').value)||40,order:parseInt(document.getElementById('ml-order').value)||1,intro:document.getElementById('ml-intro').value.trim(),text:document.getElementById('ml-text').value.trim(),keyPoints:kp,questions:qs,isQuiz:type==='quiz'};
+  const m=getModule(cid,mid);if(!m)return;
+  if(lid){const idx=m.lessons.findIndex(l=>l.id===parseInt(lid));m.lessons[idx]={...m.lessons[idx],...data};}
+  else m.lessons.push({id:DB_IDS.lesson++,...data});
+  dbSave();closeModal();selectModuleContent(cid,mid);aTab('adm-content');toast('Урок сохранён ✓','success');
+}
+
+function deleteLesson(cid, mid, lid) {
+  if(!confirm('Удалить урок?'))return;
+  const m=getModule(cid,mid);if(!m)return;
+  m.lessons=m.lessons.filter(l=>l.id!==lid);
+  dbSave();selectModuleContent(cid,mid);aTab('adm-content');toast('Урок удалён');
+}
+
+// Assignment modal
+function openAssignModal() {
+  const d=new Date();d.setDate(d.getDate()+30);
+  document.getElementById('ass-deadline').value=d.toISOString().slice(0,10);
+  document.getElementById('ass-course').innerHTML=DB_COURSES.filter(c=>c.status==='active').map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+  openModal('modal-assign');
+}
+
+function saveAssignment() {
+  const who=document.getElementById('ass-who').value;
+  const dept=document.getElementById('ass-dept').value;
+  const csel=document.getElementById('ass-course');
+  const cid=parseInt(csel.value);
+  const c=getCourse(cid);
+  DB_ASSIGNMENTS.push({id:DB_IDS.assign++,target:who,targetLabel:who==='all'?'Все консультанты':dept,courseId:cid,courseName:c?.name||'—',deadline:document.getElementById('ass-deadline').value,priority:document.getElementById('ass-priority').value,createdAt:todayStr()});
+  dbSave();closeModal();aTab('adm-assign');toast('Назначение создано ✓','success');
+}
+
+// ══ MODAL HELPERS ══════════════════════════════════
+function openModal(id) {
+  document.getElementById('modal-overlay').style.display='block';
+  document.getElementById(id).style.display='block';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').style.display='none';
+  document.querySelectorAll('.modal').forEach(m=>m.style.display='none');
+}
+
+// ══ NOTIFICATION ═══════════════════════════════════
+function toggleNotif() {
+  const p=document.getElementById('notif-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
+  if(p.style.display==='block'){
+    document.getElementById('notif-list').innerHTML=DB_NOTIFS.length
+      ?DB_NOTIFS.map(n=>`<div class="notif-item"><div class="ni-icon">${n.icon}</div><div><div class="ni-text">${n.text}</div><div class="ni-time">${n.time}</div></div></div>`).join('')
+      :'<div style="padding:16px;text-align:center;color:var(--muted)">Нет уведомлений</div>';
+  }
+}
+function clearNotifs(){DB_NOTIFS=[];document.getElementById('notif-dot').style.display='none';toggleNotif();}
+
+// ══ GENERIC HELPERS ════════════════════════════════
+function toggleSide(id) { document.getElementById(id).classList.toggle('open'); }
+function closeDropdowns() { document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open')); }
+function toggleDrop(id) {
+  const el=document.getElementById(id);
+  const was=el.classList.contains('open');
+  closeDropdowns();
+  if(!was)el.classList.add('open');
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.user-chip'))closeDropdowns();
+  if(!e.target.closest('.notif-btn')&&!e.target.closest('.notif-panel')){
+    const p=document.getElementById('notif-panel');if(p)p.style.display='none';
+  }
+});
+
+function sendReminder(name){toast(`📨 Напоминание отправлено: ${name}`,'success');DB_NOTIFS.unshift({icon:'📨',text:`Напоминание отправлено: ${name}`,time:'Только что'});document.getElementById('notif-dot').style.display='block';}
+
+function toast(msg,type='info'){
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;t.textContent=msg;
+  document.getElementById('toast-wrap').appendChild(t);
+  setTimeout(()=>t.remove(),3200);
+}
+
+</script>
+</body>
+</html>
